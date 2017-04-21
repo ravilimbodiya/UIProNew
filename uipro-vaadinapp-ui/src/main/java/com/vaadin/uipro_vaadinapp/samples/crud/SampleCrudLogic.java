@@ -18,9 +18,9 @@ import com.vaadin.server.Page;
  */
 public class SampleCrudLogic implements Serializable {
 
-    private SampleCrudView view;
+    private RealTimeDesignView view;
 
-    public SampleCrudLogic(SampleCrudView simpleCrudView) {
+    public SampleCrudLogic(RealTimeDesignView simpleCrudView) {
         view = simpleCrudView;
     }
 
@@ -52,7 +52,7 @@ public class SampleCrudLogic implements Serializable {
         }
 
         Page page = MyUI.get().getPage();
-        page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
+        page.setUriFragment("!" + RealTimeDesignView.VIEW_NAME + "/"
                 + fragmentParameter, false);
     }
 

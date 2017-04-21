@@ -26,7 +26,7 @@ import com.vaadin.ui.UI;
  * Application Lifecycle Listener implementation class UiproRequestListener
  *
  */
-@WebServlet(urlPatterns = "/mylistner", name = "UiproRequestListener", asyncSupported = true)
+@WebServlet(urlPatterns = "/uiprolistner", name = "UiproRequestListener", asyncSupported = true)
 public class UiproRequestListener extends HttpServlet {
 
 	private static final long serialVersionUID = -1571699010528307414L;
@@ -34,8 +34,9 @@ public class UiproRequestListener extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// super.service(request, response);
-		String webInfPath = getServletContext().getRealPath("/WEB-INF");
-		String filePath = webInfPath + "\\rpHolder.txt";
+		//String webInfPath = getServletContext().getRealPath("/WEB-INF");
+		//String filePath = webInfPath + "\\rpHolder.txt";
+		//Reading POST request Parameters
 		StringBuffer jb = new StringBuffer();
 		String line = null;
 		try {
@@ -43,26 +44,19 @@ public class UiproRequestListener extends HttpServlet {
 			while ((line = reader.readLine()) != null)
 				jb.append(line);
 			reader.close();
-		} catch (Exception e) {
-
-		}
-		// String reqParams = request.getParameter("uid");
-		// System.out.println(reqParams);
-		JSONParser parser = new JSONParser();
-		JSONObject reqParamsJson;
-		// Creating file for the first time
-		// myfile.createNewFile();
-		try {
+			
+			JSONParser parser = new JSONParser();
+			JSONObject reqParamsJson;
 			reqParamsJson = (JSONObject) parser.parse(jb.toString());
 			setReqParamsAsDataObject(reqParamsJson);
-			// FileWriter file = new FileWriter(filePath);
-			// file.write(reqP.toJSONString());
 			System.out.println("Successfully converted to JSON object...");
 			System.out.println("\nJSON Object: " + reqParamsJson.toJSONString());
+			// FileWriter file = new FileWriter(filePath);
+			// file.write(reqP.toJSONString());
+			// file.close();
 			//ServletContext servletContext = VaadinServlet.getCurrent().getServletContext();
 			//((MyUI) UI.getCurrent()).refreshPage();
 			//Page.getCurrent().reload();
-			// file.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

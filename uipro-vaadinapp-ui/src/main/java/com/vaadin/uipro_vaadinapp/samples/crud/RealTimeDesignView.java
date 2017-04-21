@@ -10,14 +10,17 @@ import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
@@ -30,77 +33,76 @@ import com.vaadin.ui.themes.ValoTheme;
  * See also {@link SampleCrudLogic} for fetching the data, the actual CRUD
  * operations and controlling the view based on events from outside.
  */
-public class SampleCrudView extends CssLayout implements View {
+public class RealTimeDesignView extends CssLayout implements View {
 
-    public static final String VIEW_NAME = "Inventory";
+    public static final String VIEW_NAME = "Viewer";
     private ProductGrid grid;
     private ProductForm form;
 
     private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
     private Button newProduct;
 
-    public SampleCrudView() {
+    public RealTimeDesignView() {
         setSizeFull();
         addStyleName("crud-view");
-        HorizontalLayout topLayout = createTopBar();
+        HorizontalLayout topLayout = createTopBar("See how your design looks like");
+        VerticalLayout vLayout = new VerticalLayout();
+        BrowserFrame browser = new BrowserFrame("", new ExternalResource("http://demo.vaadin.com/sampler/"));
+        	browser.setWidth("100%");
+        	browser.setHeight("100%");
+        	browser.setResponsive(true);
+        	vLayout.addComponent(topLayout);
+        	vLayout.addComponent(browser);
+        	vLayout.setMargin(true);
+        	vLayout.setSpacing(true);
+        	vLayout.setSizeFull();
+        	vLayout.setExpandRatio(topLayout, 1);
+        	vLayout.setExpandRatio(browser, 25);
+        	vLayout.setStyleName("crud-main-layout");
+        	
+        	addComponent(vLayout);
+        	
+//        grid = new ProductGrid();
+//        grid.addSelectionListener(new SelectionListener() {
+//
+//            @Override
+//            public void select(SelectionEvent event) {
+//                viewLogic.rowSelected(grid.getSelectedRow());
+//            }
+//        });
+//
+//        form = new ProductForm(viewLogic);
+//        //form.setCategories(DataService.get().getAllCategories());
+//
+//        VerticalLayout barAndGridLayout = new VerticalLayout();
+//        barAndGridLayout.addComponent(topLayout);
+//        barAndGridLayout.addComponent(grid);
+//        barAndGridLayout.setMargin(true);
+//        barAndGridLayout.setSpacing(true);
+//        barAndGridLayout.setSizeFull();
+//        barAndGridLayout.setExpandRatio(grid, 1);
+//        barAndGridLayout.setStyleName("crud-main-layout");
+//
+//        addComponent(barAndGridLayout);
+//        addComponent(form);
 
-        grid = new ProductGrid();
-        grid.addSelectionListener(new SelectionListener() {
-
-            @Override
-            public void select(SelectionEvent event) {
-                viewLogic.rowSelected(grid.getSelectedRow());
-            }
-        });
-
-        form = new ProductForm(viewLogic);
-        //form.setCategories(DataService.get().getAllCategories());
-
-        VerticalLayout barAndGridLayout = new VerticalLayout();
-        barAndGridLayout.addComponent(topLayout);
-        barAndGridLayout.addComponent(grid);
-        barAndGridLayout.setMargin(true);
-        barAndGridLayout.setSpacing(true);
-        barAndGridLayout.setSizeFull();
-        barAndGridLayout.setExpandRatio(grid, 1);
-        barAndGridLayout.setStyleName("crud-main-layout");
-
-        addComponent(barAndGridLayout);
-        addComponent(form);
-
-        viewLogic.init();
+        //viewLogic.init();
     }
 
-    public HorizontalLayout createTopBar() {
-        TextField filter = new TextField();
-        filter.setStyleName("filter-textfield");
-        filter.setInputPrompt("Filter");
-        ResetButtonForTextField.extend(filter);
-        filter.setImmediate(true);
-        filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-            @Override
-            public void textChange(FieldEvents.TextChangeEvent event) {
-                grid.setFilter(event.getText());
-            }
-        });
-
-        newProduct = new Button("New product");
+    public HorizontalLayout createTopBar(String heading) {
+        Label headingLabel = new Label(heading);
+        headingLabel.addStyleName("heading-label");
+        newProduct = new Button("Save Design");
         newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        newProduct.setIcon(FontAwesome.PLUS_CIRCLE);
-        newProduct.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                viewLogic.newProduct();
-            }
-        });
+        
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setSpacing(true);
         topLayout.setWidth("100%");
-        topLayout.addComponent(filter);
+        topLayout.addComponent(headingLabel);
         topLayout.addComponent(newProduct);
-        topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
-        topLayout.setExpandRatio(filter, 1);
+        topLayout.setComponentAlignment(headingLabel, Alignment.MIDDLE_LEFT);
+        topLayout.setExpandRatio(headingLabel, 1);
         topLayout.setStyleName("top-bar");
         return topLayout;
     }

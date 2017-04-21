@@ -6,7 +6,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.uipro_vaadinapp.samples.crud.SampleCrudView;
+import com.vaadin.uipro_vaadinapp.samples.crud.RealTimeDesignView;
 
 /**
  * Content of the UI when the user is logged in.
@@ -27,8 +27,8 @@ public class MainScreen extends HorizontalLayout {
         final Navigator navigator = new Navigator(ui, viewContainer);
         navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
-        menu.addView(new SampleCrudView(), SampleCrudView.VIEW_NAME,
-                SampleCrudView.VIEW_NAME, FontAwesome.EDIT);
+        menu.addView(new RealTimeDesignView(), RealTimeDesignView.VIEW_NAME,
+                RealTimeDesignView.VIEW_NAME, FontAwesome.EYE);
         menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME,
                 FontAwesome.INFO_CIRCLE);
 

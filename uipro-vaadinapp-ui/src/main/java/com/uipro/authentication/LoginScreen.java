@@ -23,6 +23,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class LoginScreen extends CssLayout {
 
     private TextField userid;
+    //private Label uiproLabel;
     private PasswordField password;
     private Button login;
     private Button forgotPassword;
@@ -64,7 +65,7 @@ public class LoginScreen extends CssLayout {
         loginForm.addStyleName("login-form");
         loginForm.setSizeUndefined();
         loginForm.setMargin(false);
-
+        //loginForm.addComponent(uiproLabel = new Label("UIPro"));
         loginForm.addComponent(userid = new TextField("User ID"));
         userid.setWidth(15, Unit.EM);
         //loginForm.addComponent(password = new PasswordField("Password"));
@@ -87,7 +88,7 @@ public class LoginScreen extends CssLayout {
             }
         });
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        login.addStyleName(ValoTheme.BUTTON_DANGER);
 
         buttons.addComponent(forgotPassword = new Button("Forgot password?"));
         forgotPassword.addClickListener(new Button.ClickListener() {
@@ -96,7 +97,7 @@ public class LoginScreen extends CssLayout {
                 showNotification(new Notification("Hint: Try again."));
             }
         });
-        forgotPassword.addStyleName(ValoTheme.BUTTON_LINK);
+        forgotPassword.addStyleName(ValoTheme.BUTTON_PRIMARY);
         return loginForm;
     }
 
@@ -104,8 +105,8 @@ public class LoginScreen extends CssLayout {
         CssLayout loginInformation = new CssLayout();
         loginInformation.setStyleName("login-information");
         Label loginInfoText = new Label(
-                "<h1>Login Information</h1>"
-                        + "Log in as",
+                "<h1>Welcome to UIPro</h1>"
+                        + "Create your designs by just speaking to Amazon Alexa Echo",
                 ContentMode.HTML);
         loginInformation.addComponent(loginInfoText);
         return loginInformation;

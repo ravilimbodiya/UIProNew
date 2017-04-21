@@ -35,7 +35,6 @@ public class BasicAccessControl implements AccessControl {
 			DbUtil.releaseResources();
 			return false;
 		}
-		
         
 	}
 	

@@ -49,9 +49,10 @@ public class Menu extends CssLayout {
         top.addStyleName(ValoTheme.MENU_TITLE);
         top.setSpacing(true);
         Label title = new Label("UIPro");
-        title.addStyleName(ValoTheme.LABEL_H3);
+        title.addStyleName(ValoTheme.LABEL_H2);
         title.setSizeUndefined();
-        Image image = new Image(null, new ThemeResource("img/table-logo.png"));
+        Image image = new Image(null, new ThemeResource("img/logo.png"));
+        image.setHeight("25px");
         image.setStyleName("logo");
         top.addComponent(image);
         top.addComponent(title);

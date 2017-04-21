@@ -1,8 +1,5 @@
 package com.uipro.utility;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.bson.Document;
 
 import com.mongodb.MongoClient;

@@ -10,6 +10,7 @@ import com.uipro.dataservices.DataService;
 import com.uipro.dataservices.UiproRequestDataService;
 import com.uipro.entity.UiproRequest;
 import com.uipro.views.MainScreen;
+import com.uipro.views.RealTimeView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Viewport;
@@ -79,7 +80,7 @@ public class MyUI extends UI {
 	    
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
-        getPage().setTitle("My");
+        getPage().setTitle("UIPro");
         //Check user validity
         if (!accessControl.isUserSignedIn()) {
             setContent(new LoginScreen(accessControl, new LoginListener() {
@@ -96,7 +97,7 @@ public class MyUI extends UI {
 		addPollListener(new UIEvents.PollListener() {
 			@Override
 			public void poll(UIEvents.PollEvent event) {
-				System.out.println("Inside pollling listener.");
+				//System.out.println("Inside polling listener.");
 				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService.get();
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj.getRequestData();
@@ -112,6 +113,7 @@ public class MyUI extends UI {
     		newButton.setCaption(uiproReqObj.getElementValue());
     		newButton.setId(uiproReqObj.getElementId());
     		newButton.setResponsive(true);
+    		//realTimeView.addComponentToRealTimeView(newButton);
     		setContent(newButton);
     	}
 	}
