@@ -2,8 +2,6 @@ package com.vaadin.uipro_vaadinapp.samples.crud;
 
 import java.util.Collection;
 
-import org.vaadin.henrik.refresher.Refresher;
-
 import com.uipro.dataservices.DataService;
 import com.uipro.entity.Product;
 import com.uipro.views.RealTimeView;
