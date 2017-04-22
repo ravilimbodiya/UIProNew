@@ -29,6 +29,10 @@ public class UiproRequestDataService extends DataService {
         return INSTANCE;
     }
 	
+	public synchronized static void clearInstance() {
+        INSTANCE = null;
+    }
+	
 	public synchronized static void setInstance(int uid, boolean isNewPage, String template, String element, String elementType,
 			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
          INSTANCE = new UiproRequestDataService(uid, isNewPage, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);

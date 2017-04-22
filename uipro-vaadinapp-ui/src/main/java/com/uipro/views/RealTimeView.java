@@ -11,6 +11,7 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+
 public class RealTimeView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "RealtimeView";
@@ -18,12 +19,12 @@ public class RealTimeView extends VerticalLayout implements View {
     public static CustomLayout contentToBeAdded = new CustomLayout();
     
     public RealTimeView() {
-        
+        System.out.println("realtime view");
         //aboutContent.setStyleName("about-content");
 
         // you can add Vaadin components in predefined slots in the custom
         // layout
-        
+        addComponent(new Label("RTV"));
     }
     
     public void addComponentToRealTimeView(Component compToAdd){

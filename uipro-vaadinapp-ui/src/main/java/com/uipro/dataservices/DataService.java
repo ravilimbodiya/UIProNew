@@ -19,5 +19,9 @@ public abstract class DataService implements Serializable {
 			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
         UiproRequestDataService.setInstance(uid, isNewPage, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);
     }
+    
+    public static void clear() {
+        UiproRequestDataService.clearInstance();
+    }
 
 }

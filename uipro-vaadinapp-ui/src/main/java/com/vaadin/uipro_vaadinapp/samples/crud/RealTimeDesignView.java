@@ -2,8 +2,11 @@ package com.vaadin.uipro_vaadinapp.samples.crud;
 
 import java.util.Collection;
 
+import org.vaadin.henrik.refresher.Refresher;
+
 import com.uipro.dataservices.DataService;
 import com.uipro.entity.Product;
+import com.uipro.views.RealTimeView;
 import com.vaadin.uipro_vaadinapp.samples.ResetButtonForTextField;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;
@@ -42,22 +45,24 @@ public class RealTimeDesignView extends CssLayout implements View {
     private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
     private Button newProduct;
 
-    public RealTimeDesignView() {
+    public RealTimeDesignView(VerticalLayout realTimeDesignViewerLayout) {
         setSizeFull();
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar("See how your design looks like");
         VerticalLayout vLayout = new VerticalLayout();
-        BrowserFrame browser = new BrowserFrame("", new ExternalResource("http://demo.vaadin.com/sampler/"));
-        	browser.setWidth("100%");
-        	browser.setHeight("100%");
-        	browser.setResponsive(true);
+//        RealTimeView rtView = new RealTimeView();
+//        //BrowserFrame browser = new BrowserFrame("", new ExternalResource("http://localhost:8080/uipro-vaadinapp-ui/realtimeUI"));
+//        rtView.setWidth("100%");
+//        rtView.setHeight("100%");
+//        rtView.setResponsive(true);
         	vLayout.addComponent(topLayout);
-        	vLayout.addComponent(browser);
+        	vLayout.addComponent(realTimeDesignViewerLayout);
         	vLayout.setMargin(true);
         	vLayout.setSpacing(true);
+        	
         	vLayout.setSizeFull();
         	vLayout.setExpandRatio(topLayout, 1);
-        	vLayout.setExpandRatio(browser, 25);
+        	vLayout.setExpandRatio(realTimeDesignViewerLayout, 25);
         	vLayout.setStyleName("crud-main-layout");
         	
         	addComponent(vLayout);
@@ -89,7 +94,7 @@ public class RealTimeDesignView extends CssLayout implements View {
         //viewLogic.init();
     }
 
-    public HorizontalLayout createTopBar(String heading) {
+	public HorizontalLayout createTopBar(String heading) {
         Label headingLabel = new Label(heading);
         headingLabel.addStyleName("heading-label");
         newProduct = new Button("Save Design");

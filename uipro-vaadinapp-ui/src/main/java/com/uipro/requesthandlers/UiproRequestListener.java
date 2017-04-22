@@ -65,7 +65,7 @@ public class UiproRequestListener extends HttpServlet {
 
 	private void setReqParamsAsDataObject(JSONObject reqParamsJson) {
 		DataService.set(Integer.parseInt(reqParamsJson.get("uid").toString()), 
-				Boolean.getBoolean(reqParamsJson.get("isNewPage").toString()), 
+				Boolean.getBoolean(reqParamsJson.get("isLastRequest").toString()), 
 				reqParamsJson.get("template").toString(),
 				reqParamsJson.get("element").toString(), 
 				reqParamsJson.get("elementType").toString(), 

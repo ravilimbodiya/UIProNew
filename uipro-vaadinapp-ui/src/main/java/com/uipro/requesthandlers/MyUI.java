@@ -23,6 +23,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
@@ -40,7 +41,8 @@ import com.vaadin.ui.themes.ValoTheme;
 public class MyUI extends UI {
 
     private AccessControl accessControl = new BasicAccessControl();
-
+    private static VerticalLayout globalLayout = new VerticalLayout();
+    
     @Override
     protected void init(VaadinRequest vaadinRequest) {
     	System.out.println("Vaadin UI init");
@@ -102,6 +104,7 @@ public class MyUI extends UI {
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj.getRequestData();
 					addComponentToUI(uiproReqObj);
+					DataService.clear();
 				}
 			}
 		});
@@ -114,7 +117,7 @@ public class MyUI extends UI {
     		newButton.setId(uiproReqObj.getElementId());
     		newButton.setResponsive(true);
     		//realTimeView.addComponentToRealTimeView(newButton);
-    		setContent(newButton);
+    		globalLayout.addComponent(newButton);
     	}
 	}
 
@@ -126,6 +129,10 @@ public class MyUI extends UI {
 
     public static MyUI get() {
         return (MyUI) UI.getCurrent();
+    }
+    
+    public static VerticalLayout getGlobalLayout() {
+        return globalLayout;
     }
 
     public AccessControl getAccessControl() {
