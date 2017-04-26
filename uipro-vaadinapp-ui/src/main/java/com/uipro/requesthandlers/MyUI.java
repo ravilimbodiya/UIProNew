@@ -34,7 +34,6 @@ import com.vaadin.ui.themes.ValoTheme;
 @Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mytheme")
 @Widgetset("com.vaadin.uipro_vaadinapp.MyAppWidgetset")
-//@Push(PushMode.MANUAL)
 public class MyUI extends UI {
 
     /**
@@ -47,40 +46,6 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
     	System.out.println("Vaadin UI init");
-    	//COMMENTED FOR NOW. THIS IS THE ALTERNATIVE WAY OF SYNCHORNIZING HTTP AND VAADIN REQUESTS USING A TEMP FILE
-//    	String webInfPath  = VaadinServlet.getCurrent().getServletContext().getRealPath("/WEB-INF");
-//		String filePath = webInfPath+"\\rpHolder.txt";
-		
-//		 try {
-			// wrap a BufferedReader around FileReader
-//			BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
-//			// use the readLine method of the BufferedReader to read one line at a time.
-//			// the readLine method returns null when there is nothing else to read.
-//			String line, line1 = "";
-//			while ((line = bufferedReader.readLine()) != null)
-//			{
-//			    line1 += line;
-//			}
-//			// close the BufferedReader when we're done
-//			bufferedReader.close();
-//			JSONParser parser = new JSONParser();
-//			JSONObject jsonObj = (JSONObject) parser.parse(line1);
-			
-			//Content
-			//setContent(new Button((String) jsonObj.get("p1")));
-			
-			//this.refresh(vaadinRequest);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	    
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
         getPage().setTitle("UIPro");
@@ -110,7 +75,6 @@ public class MyUI extends UI {
 
 			@Override
 			public void poll(UIEvents.PollEvent event) {
-				//System.out.println("Inside polling listener.");
 				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService.get();
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj.getRequestData();
