@@ -1,17 +1,18 @@
 package com.uipro.dataservices;
 
 import java.io.Serializable;
-import java.util.Collection;
-
-import com.uipro.entity.Category;
-import com.uipro.entity.Product;
 
 /**
  * Back-end service interface for retrieving and updating product data.
  */
 public abstract class DataService implements Serializable {
 
-    public static DataService get() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5577917480656457934L;
+
+	public static DataService get() {
         return UiproRequestDataService.getInstance();
     }
     

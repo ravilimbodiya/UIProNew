@@ -8,7 +8,11 @@ import com.uipro.entity.UiproRequest;
  */
 public class UiproRequestDataService extends DataService {
 
-    private static UiproRequestDataService INSTANCE;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7826521234862461646L;
+	private static UiproRequestDataService INSTANCE;
     private UiproRequest requestData;
 
     private UiproRequestDataService(int uid, boolean isNewPage, String template, String element, String elementType,

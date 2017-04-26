@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.uipro.dataservices.DataService;
 import com.uipro.entity.Product;
-import com.uipro.views.RealTimeView;
+import com.uipro.views.MyDesigns;
 import com.vaadin.uipro_vaadinapp.samples.ResetButtonForTextField;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;

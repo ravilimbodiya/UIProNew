@@ -10,7 +10,6 @@ import com.uipro.dataservices.DataService;
 import com.uipro.dataservices.UiproRequestDataService;
 import com.uipro.entity.UiproRequest;
 import com.uipro.views.MainScreen;
-import com.uipro.views.RealTimeView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Viewport;
@@ -20,8 +19,6 @@ import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -40,7 +37,11 @@ import com.vaadin.ui.themes.ValoTheme;
 //@Push(PushMode.MANUAL)
 public class MyUI extends UI {
 
-    private AccessControl accessControl = new BasicAccessControl();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7517282906277130464L;
+	private AccessControl accessControl = new BasicAccessControl();
     private static VerticalLayout globalLayout = new VerticalLayout();
     
     @Override
@@ -86,7 +87,12 @@ public class MyUI extends UI {
         //Check user validity
         if (!accessControl.isUserSignedIn()) {
             setContent(new LoginScreen(accessControl, new LoginListener() {
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -5006228254614709162L;
+
+				@Override
                 public void loginSuccessful() {
                     showMainView();
                 }
@@ -97,6 +103,11 @@ public class MyUI extends UI {
     	//Client polls server every 2 seconds to see if there is new changes in this UI
     	setPollInterval(2000);
 		addPollListener(new UIEvents.PollListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7485077668520630312L;
+
 			@Override
 			public void poll(UIEvents.PollEvent event) {
 				//System.out.println("Inside polling listener.");
@@ -142,6 +153,11 @@ public class MyUI extends UI {
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5252033054729474690L;
     	
     }
 }

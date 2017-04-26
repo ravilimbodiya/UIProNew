@@ -1,26 +1,18 @@
 package com.uipro.requesthandlers;
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.uipro.dataservices.DataService;
-import com.uipro.dataservices.UiproRequestDataService;
-import com.uipro.entity.UiproRequest;
-import com.vaadin.server.Page;
-import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.UI;
 
 /**
  * Application Lifecycle Listener implementation class UiproRequestListener
