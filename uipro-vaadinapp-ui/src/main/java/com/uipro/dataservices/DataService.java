@@ -2,6 +2,8 @@ package com.uipro.dataservices;
 
 import java.io.Serializable;
 
+import com.uipro.entity.UiproRequest;
+
 /**
  * Back-end service interface for retrieving and updating product data.
  */
@@ -16,9 +18,8 @@ public abstract class DataService implements Serializable {
         return UiproRequestDataService.getInstance();
     }
     
-    public static void set(int uid, boolean isNewPage, String template, String element, String elementType,
-			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
-        UiproRequestDataService.setInstance(uid, isNewPage, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);
+    public static void set(UiproRequest reqObj) {
+        UiproRequestDataService.setInstance(reqObj);
     }
     
     public static void clear() {

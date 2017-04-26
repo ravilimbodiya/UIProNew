@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.uipro.dataservices.DataService;
+import com.uipro.entity.UiproRequest;
 
 /**
  * Application Lifecycle Listener implementation class UiproRequestListener
@@ -23,12 +24,10 @@ public class UiproRequestListener extends HttpServlet {
 
 	private static final long serialVersionUID = -1571699010528307414L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// super.service(request, response);
-		//String webInfPath = getServletContext().getRealPath("/WEB-INF");
-		//String filePath = webInfPath + "\\rpHolder.txt";
-		//Reading POST request Parameters
+	protected void service(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		// Reading POST request Parameters
 		StringBuffer jb = new StringBuffer();
 		String line = null;
 		try {
@@ -36,35 +35,38 @@ public class UiproRequestListener extends HttpServlet {
 			while ((line = reader.readLine()) != null)
 				jb.append(line);
 			reader.close();
-			
+
 			JSONParser parser = new JSONParser();
-			JSONObject reqParamsJson;
-			reqParamsJson = (JSONObject) parser.parse(jb.toString());
-			setReqParamsAsDataObject(reqParamsJson);
+			JSONObject jsonObj;
+
+			jsonObj = (JSONObject) parser.parse(jb.toString());
+			UiproRequest reqObj = convertJsonToDataObject(jsonObj);
+
+			DataService.set(reqObj);
+
 			System.out.println("Successfully converted to JSON object...");
-			System.out.println("\nJSON Object: " + reqParamsJson.toJSONString());
-			// FileWriter file = new FileWriter(filePath);
-			// file.write(reqP.toJSONString());
-			// file.close();
-			//ServletContext servletContext = VaadinServlet.getCurrent().getServletContext();
-			//((MyUI) UI.getCurrent()).refreshPage();
-			//Page.getCurrent().reload();
-			
+			System.out.println("\nJSON Object: " + jsonObj.toJSONString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void setReqParamsAsDataObject(JSONObject reqParamsJson) {
-		DataService.set(Integer.parseInt(reqParamsJson.get("uid").toString()), 
-				Boolean.getBoolean(reqParamsJson.get("isLastRequest").toString()), 
-				reqParamsJson.get("template").toString(),
-				reqParamsJson.get("element").toString(), 
-				reqParamsJson.get("elementType").toString(), 
-				reqParamsJson.get("elementName").toString(),
-				reqParamsJson.get("elementId").toString(), 
-				reqParamsJson.get("elementPosition").toString(), 
-				reqParamsJson.get("elementColor").toString(),
-				reqParamsJson.get("elementValue").toString());
+	private UiproRequest convertJsonToDataObject(JSONObject reqParamsJson) {
+		UiproRequest reqObj = new UiproRequest();
+
+		reqObj.setUid(Integer.parseInt(reqParamsJson.get("uid").toString()));
+		reqObj.setElement(reqParamsJson.get("element").toString());
+		reqObj.setElementColor(reqParamsJson.get("elementColor").toString());
+		reqObj.setElementName(reqParamsJson.get("elementName").toString());
+		reqObj.setElementType(reqParamsJson.get("elementType").toString());
+		reqObj.setElementValue(reqParamsJson.get("elementValue").toString());
+		reqObj.setNewPage(Boolean.getBoolean(reqParamsJson.get("isLastRequest")
+				.toString()));
+		reqObj.setTemplate(reqParamsJson.get("template").toString());
+		reqObj.setElementId(reqParamsJson.get("elementId").toString());
+		reqObj.setElementPosition(reqParamsJson.get("elementPosition")
+				.toString());
+		
+		return reqObj;
 	}
 }
