@@ -14,7 +14,7 @@ public abstract class DataService implements Serializable {
 	 */
 	private static final long serialVersionUID = -5577917480656457934L;
 
-	public static DataService get() {
+	public static DataService getNewRequestData() {
         return UiproRequestDataService.getInstance();
     }
     

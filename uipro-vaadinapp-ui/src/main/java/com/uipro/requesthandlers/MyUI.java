@@ -9,6 +9,7 @@ import com.uipro.authentication.LoginScreen.LoginListener;
 import com.uipro.dataservices.DataService;
 import com.uipro.dataservices.UiproRequestDataService;
 import com.uipro.entity.UiproRequest;
+import com.uipro.utility.Constants;
 import com.uipro.views.MainScreen;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -31,97 +32,89 @@ import com.vaadin.ui.themes.ValoTheme;
  * mobile devices. Instead of device based scaling (default), using responsive
  * layouts.
  */
+
 @Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mytheme")
 @Widgetset("com.vaadin.uipro_vaadinapp.MyAppWidgetset")
 public class MyUI extends UI {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -7517282906277130464L;
 	private AccessControl accessControl = new BasicAccessControl();
-    private static VerticalLayout globalLayout = new VerticalLayout();
-    
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-    	System.out.println("Vaadin UI init");
-        Responsive.makeResponsive(this);
-        setLocale(vaadinRequest.getLocale());
-        getPage().setTitle("UIPro");
-        //Check user validity
-        if (!accessControl.isUserSignedIn()) {
-            setContent(new LoginScreen(accessControl, new LoginListener() {
-                /**
-				 * 
-				 */
+	private static VerticalLayout globalLayout = new VerticalLayout();
+
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
+		System.out.println("Vaadin UI init");
+
+		Responsive.makeResponsive(this);
+		setLocale(vaadinRequest.getLocale());
+		getPage().setTitle("UIPro");
+
+		// Check user validity
+		if (!accessControl.isUserSignedIn()) {
+			setContent(new LoginScreen(accessControl, new LoginListener() {
 				private static final long serialVersionUID = -5006228254614709162L;
 
 				@Override
-                public void loginSuccessful() {
-                    showMainView();
-                }
-            }));
-        } else {
-            showMainView();
-        }
-    	//Client polls server every 2 seconds to see if there is new changes in this UI
-    	setPollInterval(2000);
+				public void loginSuccessful() {
+					showMainView();
+				}
+			}));
+		} else {
+			showMainView();
+		}
+
+		setPollInterval(Constants.POLL_DURATION);
+
 		addPollListener(new UIEvents.PollListener() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 7485077668520630312L;
 
 			@Override
 			public void poll(UIEvents.PollEvent event) {
-				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService.get();
+				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService
+						.getNewRequestData();
 				if (uiproRequestServiceObj != null) {
-					UiproRequest uiproReqObj = uiproRequestServiceObj.getRequestData();
+					UiproRequest uiproReqObj = uiproRequestServiceObj
+							.getRequestData();
 					addComponentToUI(uiproReqObj);
 					DataService.clear();
 				}
 			}
 		});
-    }
-    
-    public void addComponentToUI(UiproRequest uiproReqObj) {
-    	if(uiproReqObj.getElement().equalsIgnoreCase("button")){
-    		Button newButton = new Button();
-    		newButton.setCaption(uiproReqObj.getElementValue());
-    		newButton.setId(uiproReqObj.getElementId());
-    		newButton.setResponsive(true);
-    		//realTimeView.addComponentToRealTimeView(newButton);
-    		globalLayout.addComponent(newButton);
-    	}
 	}
 
-    protected void showMainView() {
-        addStyleName(ValoTheme.UI_WITH_MENU);
-        setContent(new MainScreen(MyUI.this));
-        getNavigator().navigateTo(getNavigator().getState());
-    }
+	public void addComponentToUI(UiproRequest uiproReqObj) {
+		if (uiproReqObj.getElement().equalsIgnoreCase("button")) {
+			Button newButton = new Button();
+			newButton.setCaption(uiproReqObj.getElementValue());
+			newButton.setId(uiproReqObj.getElementId());
+			newButton.setResponsive(true);
+			globalLayout.addComponent(newButton);
+		}
+	}
 
-    public static MyUI get() {
-        return (MyUI) UI.getCurrent();
-    }
-    
-    public static VerticalLayout getGlobalLayout() {
-        return globalLayout;
-    }
+	protected void showMainView() {
+		addStyleName(ValoTheme.UI_WITH_MENU);
+		setContent(new MainScreen(MyUI.this));
+		getNavigator().navigateTo(getNavigator().getState());
+	}
 
-    public AccessControl getAccessControl() {
-        return accessControl;
-    }
+	public static MyUI get() {
+		return (MyUI) UI.getCurrent();
+	}
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+	public static VerticalLayout getGlobalLayout() {
+		return globalLayout;
+	}
 
-		/**
-		 * 
-		 */
+	public AccessControl getAccessControl() {
+		return accessControl;
+	}
+
+	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+	public static class MyUIServlet extends VaadinServlet {
 		private static final long serialVersionUID = 5252033054729474690L;
-    	
-    }
+
+	}
 }
