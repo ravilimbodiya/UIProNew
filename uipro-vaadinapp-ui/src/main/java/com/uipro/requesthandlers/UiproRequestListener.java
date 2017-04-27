@@ -59,13 +59,22 @@ public class UiproRequestListener extends HttpServlet {
 		reqObj.setElementColor(reqParamsJson.get("elementColor").toString());
 		reqObj.setElementName(reqParamsJson.get("elementName").toString());
 		reqObj.setElementType(reqParamsJson.get("elementType").toString());
-		reqObj.setElementValue(reqParamsJson.get("elementValue").toString());
+		
+		
+		String elemVal = (String) reqParamsJson.get("elementValue");
+		if(elemVal != null) {
+			reqObj.setElementValue(elemVal);
+		}
+		
 		reqObj.setNewPage(Boolean.getBoolean(reqParamsJson.get("isLastRequest")
 				.toString()));
 		reqObj.setTemplate(reqParamsJson.get("template").toString());
 		reqObj.setElementId(reqParamsJson.get("elementId").toString());
-		reqObj.setElementPosition(reqParamsJson.get("elementPosition")
-				.toString());
+		
+		String elemPos = (String) reqParamsJson.get("elementPosition");
+		if(elemPos != null) {
+			reqObj.setElementPosition(elemPos);
+		}
 		
 		return reqObj;
 	}
