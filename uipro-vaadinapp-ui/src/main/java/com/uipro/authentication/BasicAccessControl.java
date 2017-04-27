@@ -1,15 +1,10 @@
 package com.uipro.authentication;
 
-import com.mongodb.*;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Projections.*;
-import com.mongodb.client.model.Sorts;
-import java.util.Arrays;
+import static com.mongodb.client.model.Filters.eq;
+
 import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
 import com.uipro.utility.DbUtil;
 
 /**
@@ -18,6 +13,11 @@ import com.uipro.utility.DbUtil;
  * administrator.
  */
 public class BasicAccessControl implements AccessControl {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2139681530897933030L;
 
 	@Override
 	public boolean signIn(String userid) {
