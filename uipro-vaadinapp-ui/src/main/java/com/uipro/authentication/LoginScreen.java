@@ -22,7 +22,11 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class LoginScreen extends CssLayout {
 
-    private TextField userid;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6053693865983225782L;
+	private TextField userid;
     //private Label uiproLabel;
     private PasswordField password;
     private Button login;
@@ -78,7 +82,12 @@ public class LoginScreen extends CssLayout {
         buttons.addComponent(login = new Button("Login"));
         login.setDisableOnClick(true);
         login.addClickListener(new Button.ClickListener() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1364534671489651010L;
+
+			@Override
             public void buttonClick(Button.ClickEvent event) {
                 try {
                     login();
@@ -92,7 +101,12 @@ public class LoginScreen extends CssLayout {
 
         buttons.addComponent(forgotPassword = new Button("Forgot password?"));
         forgotPassword.addClickListener(new Button.ClickListener() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -8580559237140997724L;
+
+			@Override
             public void buttonClick(Button.ClickEvent event) {
                 showNotification(new Notification("Hint: Try again."));
             }

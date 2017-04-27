@@ -2,29 +2,17 @@ package com.vaadin.uipro_vaadinapp.samples.crud;
 
 import java.util.Collection;
 
-import com.uipro.dataservices.DataService;
 import com.uipro.entity.Product;
-import com.uipro.views.RealTimeView;
-import com.vaadin.uipro_vaadinapp.samples.ResetButtonForTextField;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.SelectionEvent;
-import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -36,7 +24,11 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class RealTimeDesignView extends CssLayout implements View {
 
-    public static final String VIEW_NAME = "Viewer";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8984717224420228155L;
+	public static final String VIEW_NAME = "Viewer";
     private ProductGrid grid;
     private ProductForm form;
 

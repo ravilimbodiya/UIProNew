@@ -1,5 +1,7 @@
 package com.uipro.requesthandlers;
 
+import java.awt.Label;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.uipro.authentication.AccessControl;
@@ -8,9 +10,10 @@ import com.uipro.authentication.LoginScreen;
 import com.uipro.authentication.LoginScreen.LoginListener;
 import com.uipro.dataservices.DataService;
 import com.uipro.dataservices.UiproRequestDataService;
+import com.uipro.entity.ComponentDetail;
 import com.uipro.entity.UiproRequest;
+import com.uipro.utility.Constants;
 import com.uipro.views.MainScreen;
-import com.uipro.views.RealTimeView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Viewport;
@@ -19,9 +22,12 @@ import com.vaadin.event.UIEvents;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,114 +40,177 @@ import com.vaadin.ui.themes.ValoTheme;
  * mobile devices. Instead of device based scaling (default), using responsive
  * layouts.
  */
+
 @Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mytheme")
 @Widgetset("com.vaadin.uipro_vaadinapp.MyAppWidgetset")
-//@Push(PushMode.MANUAL)
 public class MyUI extends UI {
 
-    private AccessControl accessControl = new BasicAccessControl();
-    private static VerticalLayout globalLayout = new VerticalLayout();
-    
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-    	System.out.println("Vaadin UI init");
-    	//COMMENTED FOR NOW. THIS IS THE ALTERNATIVE WAY OF SYNCHORNIZING HTTP AND VAADIN REQUESTS USING A TEMP FILE
-//    	String webInfPath  = VaadinServlet.getCurrent().getServletContext().getRealPath("/WEB-INF");
-//		String filePath = webInfPath+"\\rpHolder.txt";
-		
-//		 try {
-			// wrap a BufferedReader around FileReader
-//			BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
-//			// use the readLine method of the BufferedReader to read one line at a time.
-//			// the readLine method returns null when there is nothing else to read.
-//			String line, line1 = "";
-//			while ((line = bufferedReader.readLine()) != null)
-//			{
-//			    line1 += line;
-//			}
-//			// close the BufferedReader when we're done
-//			bufferedReader.close();
-//			JSONParser parser = new JSONParser();
-//			JSONObject jsonObj = (JSONObject) parser.parse(line1);
-			
-			//Content
-			//setContent(new Button((String) jsonObj.get("p1")));
-			
-			//this.refresh(vaadinRequest);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	    
-        Responsive.makeResponsive(this);
-        setLocale(vaadinRequest.getLocale());
-        getPage().setTitle("UIPro");
-        //Check user validity
-        if (!accessControl.isUserSignedIn()) {
-            setContent(new LoginScreen(accessControl, new LoginListener() {
-                @Override
-                public void loginSuccessful() {
-                    showMainView();
-                }
-            }));
-        } else {
-            showMainView();
-        }
-    	//Client polls server every 2 seconds to see if there is new changes in this UI
-    	setPollInterval(2000);
+	private static final long serialVersionUID = -7517282906277130464L;
+	private AccessControl accessControl = new BasicAccessControl();
+	private static VerticalLayout globalLayout = new VerticalLayout();
+
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
+		System.out.println("Vaadin UI init");
+
+		Responsive.makeResponsive(this);
+		setLocale(vaadinRequest.getLocale());
+		getPage().setTitle("UIPro");
+
+		// Check user validity
+		if (!accessControl.isUserSignedIn()) {
+			setContent(new LoginScreen(accessControl, new LoginListener() {
+				private static final long serialVersionUID = -5006228254614709162L;
+
+				@Override
+				public void loginSuccessful() {
+					showMainView();
+				}
+			}));
+		} else {
+			showMainView();
+		}
+
+		setPollInterval(Constants.POLL_DURATION);
+
 		addPollListener(new UIEvents.PollListener() {
+			private static final long serialVersionUID = 7485077668520630312L;
+
 			@Override
 			public void poll(UIEvents.PollEvent event) {
-				//System.out.println("Inside polling listener.");
-				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService.get();
+				UiproRequestDataService uiproRequestServiceObj = (UiproRequestDataService) DataService
+						.getNewRequestData();
 				if (uiproRequestServiceObj != null) {
-					UiproRequest uiproReqObj = uiproRequestServiceObj.getRequestData();
-					addComponentToUI(uiproReqObj);
+					UiproRequest uiproReqObj = uiproRequestServiceObj
+							.getRequestData();
+					ComponentDetail cd = parseComponentFromRequest(uiproReqObj);
+					addComponentToUI(cd);
 					DataService.clear();
 				}
 			}
 		});
-    }
-    
-    public void addComponentToUI(UiproRequest uiproReqObj) {
-    	if(uiproReqObj.getElement().equalsIgnoreCase("button")){
-    		Button newButton = new Button();
-    		newButton.setCaption(uiproReqObj.getElementValue());
-    		newButton.setId(uiproReqObj.getElementId());
-    		newButton.setResponsive(true);
-    		//realTimeView.addComponentToRealTimeView(newButton);
-    		globalLayout.addComponent(newButton);
-    	}
 	}
 
-    protected void showMainView() {
-        addStyleName(ValoTheme.UI_WITH_MENU);
-        setContent(new MainScreen(MyUI.this));
-        getNavigator().navigateTo(getNavigator().getState());
-    }
+	private ComponentDetail parseComponentFromRequest(UiproRequest reqObj) {
+		ComponentDetail cdObject = new ComponentDetail();
 
-    public static MyUI get() {
-        return (MyUI) UI.getCurrent();
-    }
-    
-    public static VerticalLayout getGlobalLayout() {
-        return globalLayout;
-    }
+		Alignment alignment = parseComponentAlignment(reqObj);
+		Component component = parseComponentProp(reqObj);
 
-    public AccessControl getAccessControl() {
-        return accessControl;
-    }
+		cdObject.setAlignment(alignment);
+		cdObject.setComponent(component);
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
-    	
-    }
+		return cdObject;
+
+	}
+
+	private Component parseComponentProp(UiproRequest reqObj) {
+		String elementType = reqObj.getElementType().toLowerCase();
+		Component c = null;
+
+		switch (elementType) {
+		case Constants.BUTTON:
+			c = new Button();
+			fillButtonProperties(reqObj, c);
+			break;
+		case Constants.TEXTFIELD:
+			c = new TextField();
+			fillTextFieldProperties(reqObj, c);
+			break;
+		case Constants.CHECKBOX:
+			c = new CheckBox();
+			break;
+		case Constants.LABEL:
+			c = (Component) new Label();
+			fillLabelProperties(reqObj, c);
+			break;
+		case Constants.DROPDOWN:
+			break;
+		}
+		return c;
+	}
+
+	private void fillLabelProperties(UiproRequest reqObj, Component c) {
+
+	}
+
+	private void fillTextFieldProperties(UiproRequest reqObj, Component c) {
+
+	}
+
+	private void fillButtonProperties(UiproRequest reqObj, Component button) {
+		String buttonLabel = reqObj.getElementValue();
+		if (buttonLabel == null || buttonLabel.length() == 0) {
+			button.setCaption(Constants.BUTTONLABEL);
+		} else {
+			button.setCaption(buttonLabel);
+		}
+
+		button.setId(reqObj.getElementId());
+		((AbstractComponent) button).setResponsive(true);
+	}
+
+	private Alignment parseComponentAlignment(UiproRequest reqObj) {
+		String elementPosition = reqObj.getElementPosition();
+		Alignment a = Constants.ALIGNMENT;
+
+		if (elementPosition != null && elementPosition.length() > 0) {
+			switch (elementPosition.toLowerCase()) {
+			case "top_left":
+				return Alignment.TOP_LEFT;
+			case "top_right":
+				return Alignment.TOP_RIGHT;
+			case "top_center":
+				return Alignment.TOP_CENTER;
+			case "middle_left":
+				return Alignment.MIDDLE_LEFT;
+			case "middle_right":
+				return Alignment.MIDDLE_RIGHT;
+			case "bottom_left":
+				return Alignment.BOTTOM_LEFT;
+			case "bottom_center":
+				return Alignment.BOTTOM_CENTER;
+			case "bottom_right":
+				return Alignment.BOTTOM_RIGHT;
+			case "middle_center":
+				return Alignment.MIDDLE_CENTER;
+			default:
+				return a;
+			}
+		} else
+			return a;
+	}
+
+	// this fn will take an component detail object and put that on the layout
+	public void addComponentToUI(ComponentDetail cd) {
+		globalLayout.addComponent(cd.getComponent());
+		globalLayout
+				.setComponentAlignment(cd.getComponent(), cd.getAlignment());
+	}
+
+	protected void showMainView() {
+		addStyleName(ValoTheme.UI_WITH_MENU);
+		setContent(new MainScreen(MyUI.this));
+		getNavigator().navigateTo(getNavigator().getState());
+	}
+
+	public static MyUI get() {
+		return (MyUI) UI.getCurrent();
+	}
+
+	public static VerticalLayout getGlobalLayout() {
+		return globalLayout;
+	}
+
+	public AccessControl getAccessControl() {
+		return accessControl;
+	}
+
+	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+	public static class MyUIServlet extends VaadinServlet {
+		private static final long serialVersionUID = 5252033054729474690L;
+
+	}
 }

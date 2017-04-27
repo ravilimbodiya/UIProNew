@@ -28,7 +28,11 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class Menu extends CssLayout {
 
-    private static final String VALO_MENUITEMS = "valo-menuitems";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3116919519838737686L;
+	private static final String VALO_MENUITEMS = "valo-menuitems";
     private static final String VALO_MENU_TOGGLE = "valo-menu-toggle";
     private static final String VALO_MENU_VISIBLE = "valo-menu-visible";
     private Navigator navigator;
@@ -62,7 +66,12 @@ public class Menu extends CssLayout {
         MenuBar logoutMenu = new MenuBar();
         logoutMenu.addItem("Logout", FontAwesome.SIGN_OUT, new Command() {
 
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 764894067943070863L;
+
+			@Override
             public void menuSelected(MenuItem selectedItem) {
                 VaadinSession.getCurrent().getSession().invalidate();
                 Page.getCurrent().reload();
@@ -74,7 +83,12 @@ public class Menu extends CssLayout {
 
         // button for toggling the visibility of the menu when on a small screen
         final Button showMenu = new Button("Menu", new ClickListener() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -8156080221875881097L;
+
+			@Override
             public void buttonClick(final ClickEvent event) {
                 if (menuPart.getStyleName().contains(VALO_MENU_VISIBLE)) {
                     menuPart.removeStyleName(VALO_MENU_VISIBLE);
@@ -143,7 +157,12 @@ public class Menu extends CssLayout {
             Resource icon) {
         Button button = new Button(caption, new ClickListener() {
 
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1586349744608272234L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 navigator.navigateTo(name);
 

@@ -8,15 +8,17 @@ import com.uipro.entity.UiproRequest;
  */
 public class UiproRequestDataService extends DataService {
 
-    private static UiproRequestDataService INSTANCE;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7826521234862461646L;
+	private static UiproRequestDataService INSTANCE;
     private UiproRequest requestData;
 
-    private UiproRequestDataService(int uid, boolean isNewPage, String template, String element, String elementType,
-			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
-    	//Setting request data into object
-    	setRequestData(new UiproRequest(uid, isNewPage, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue));
+    private UiproRequestDataService(UiproRequest reqObj) {
+    	setRequestData(reqObj);
     }
-
+    
     public synchronized UiproRequest getRequestData() {
 		return requestData;
 	}
@@ -33,9 +35,8 @@ public class UiproRequestDataService extends DataService {
         INSTANCE = null;
     }
 	
-	public synchronized static void setInstance(int uid, boolean isNewPage, String template, String element, String elementType,
-			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
-         INSTANCE = new UiproRequestDataService(uid, isNewPage, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);
+	public synchronized static void setInstance(UiproRequest reqObj) {
+         INSTANCE = new UiproRequestDataService(reqObj);
     }
 
 }

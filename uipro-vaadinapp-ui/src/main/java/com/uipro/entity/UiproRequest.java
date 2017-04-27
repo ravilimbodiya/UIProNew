@@ -1,18 +1,16 @@
 package com.uipro.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Set;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.json.simple.JSONObject;
 
 public class UiproRequest implements Serializable {
 
-    @NotNull
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2587357260513116240L;
+	@NotNull
     private int uid = -1;
     private boolean isNewPage = false;
     private String template;
@@ -25,6 +23,16 @@ public class UiproRequest implements Serializable {
     private String elementValue;
     
     public UiproRequest() {
+    	uid = -1;
+    	isNewPage = false;
+    	elementValue = null;
+    	template = null;
+    	element = null;
+    	elementType = null;
+    	elementName = null;
+    	elementPosition = null;
+    	elementColor = null;
+    	elementId = null;
 	}
     
 	public UiproRequest(int uid, boolean isNewPage, String template, String element, String elementType,
