@@ -25,14 +25,14 @@ public class UiproRequest implements Serializable {
     public UiproRequest() {
     	uid = -1;
     	isNewPage = false;
-    	elementValue = null;
+    	elementValue = "button";
     	template = null;
-    	element = null;
-    	elementType = null;
-    	elementName = null;
-    	elementPosition = null;
-    	elementColor = null;
-    	elementId = null;
+    	element = "button";
+    	elementType = "button";
+    	elementName = "button";
+    	elementPosition = "top_center";
+    	elementColor = "red";
+    	elementId = "button1";
 	}
     
 	public UiproRequest(int uid, boolean isNewPage, String template, String element, String elementType,

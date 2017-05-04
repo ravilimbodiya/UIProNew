@@ -83,8 +83,6 @@ public class UiproRequestListener extends HttpServlet {
 		if (elemVal != null) {
 			reqObj.setElementValue(elemVal);
 		} 
-		
-		
 
 		String isLastReq = (String) reqParamsJson.get("isLastRequest");
 		if (isLastReq != null && isLastReq.length() > 0) {
