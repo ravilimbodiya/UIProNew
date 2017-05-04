@@ -13,7 +13,6 @@ public class Constants {
 	public static final String TEXTFIELD = "textfield";
 	public static final String DROPDOWN = "dropdown";
 	public static final String CHECKBOX = "checkbox";
-	public static final String ELEMENT_VALUE_DEFAULT = "";
 
 	//default alignment value
 	public static final Alignment ALIGNMENT = Alignment.MIDDLE_CENTER;
