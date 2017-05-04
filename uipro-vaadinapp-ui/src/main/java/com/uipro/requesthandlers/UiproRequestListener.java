@@ -54,28 +54,58 @@ public class UiproRequestListener extends HttpServlet {
 	private UiproRequest convertJsonToDataObject(JSONObject reqParamsJson) {
 		UiproRequest reqObj = new UiproRequest();
 
-		reqObj.setUid(Integer.parseInt(reqParamsJson.get("uid").toString()));
-		reqObj.setElement(reqParamsJson.get("element").toString());
-		reqObj.setElementColor(reqParamsJson.get("elementColor").toString());
-		reqObj.setElementName(reqParamsJson.get("elementName").toString());
-		reqObj.setElementType(reqParamsJson.get("elementType").toString());
-		
-		
-		String elemVal = (String) reqParamsJson.get("elementValue");
-		if(elemVal != null) {
-			reqObj.setElementValue(elemVal);
+		String uid = (String) reqParamsJson.get("uid");
+		if (uid != null && uid.length() > 0) {
+			reqObj.setUid(Integer.parseInt(uid));
 		}
+
+		String element = (String) reqParamsJson.get("element");
+		if (element != null && element.length() > 0) {
+			reqObj.setElement(element);
+		}
+
+		String elemColor = (String) reqParamsJson.get("elementColor");
+		if (elemColor != null && elemColor.length() > 0) {
+			reqObj.setElementColor(elemColor);
+		}
+
+		String elemName = (String) reqParamsJson.get("elementName");
+		if (elemName != null && elemName.length() > 0) {
+			reqObj.setElementName(elemName);
+		}
+
+		String elemType = (String) reqParamsJson.get("elementType");
+		if (elemType != null && elemType.length() > 0) {
+			reqObj.setElementType(elemType);
+		}
+
+		String elemVal = (String) reqParamsJson.get("elementValue");
+		if (elemVal != null) {
+			reqObj.setElementValue(elemVal);
+		} 
 		
-		reqObj.setNewPage(Boolean.getBoolean(reqParamsJson.get("isLastRequest")
-				.toString()));
-		reqObj.setTemplate(reqParamsJson.get("template").toString());
-		reqObj.setElementId(reqParamsJson.get("elementId").toString());
 		
+
+		String isLastReq = (String) reqParamsJson.get("isLastRequest");
+		if (isLastReq != null && isLastReq.length() > 0) {
+			reqObj.setNewPage(Boolean.getBoolean(isLastReq));
+		}
+
+		String template = (String)reqParamsJson.get("template");
+		if(template != null && template.length() > 0) {
+			reqObj.setTemplate(template);
+		} 
+
+		String elemId = (String) reqParamsJson.get("elementId");
+		if(elemId != null && elemId.length() > 0) {
+			reqObj.setElementId(elemId);
+		}
+
 		String elemPos = (String) reqParamsJson.get("elementPosition");
-		if(elemPos != null) {
+		if (elemPos != null) {
 			reqObj.setElementPosition(elemPos);
 		}
-		
+
 		return reqObj;
 	}
 }
