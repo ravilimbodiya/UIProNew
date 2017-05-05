@@ -1,6 +1,6 @@
 package com.uipro.requesthandlers;
 
-import java.awt.Label;
+
 
 import javax.servlet.annotation.WebServlet;
 
@@ -27,6 +27,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -131,8 +132,8 @@ public class MyUI extends UI {
 		return c;
 	}
 
-	private void fillLabelProperties(UiproRequest reqObj, Component c) {
-
+	private void fillLabelProperties(UiproRequest reqObj, Component label) {
+		label.setCaption(reqObj.getElementValue());
 	}
 
 	private void fillTextFieldProperties(UiproRequest reqObj, Component c) {

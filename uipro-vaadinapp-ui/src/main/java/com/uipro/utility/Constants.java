@@ -5,7 +5,7 @@ import com.vaadin.ui.Alignment;
 public class Constants {
 	
 	// Polling duration in milisec
-	public static final int POLL_DURATION = 2000;
+	public static final int POLL_DURATION = 3000;
 	
 	//Types of widgets that can be drawn
 	public static final String BUTTON = "button";
