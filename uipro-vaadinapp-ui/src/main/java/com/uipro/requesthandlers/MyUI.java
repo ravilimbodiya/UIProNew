@@ -85,8 +85,16 @@ public class MyUI extends UI {
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj
 							.getRequestData();
-					ComponentDetail cd = parseComponentFromRequest(uiproReqObj);
-					addComponentToUI(cd);
+					
+					//if user asked some custom components
+					if (uiproReqObj.getTemplate() == null) {
+						ComponentDetail cd = parseComponentFromRequest(uiproReqObj);
+						addComponentToUI(cd);
+					} else {
+						// draw the specified template for him
+						//TODO: Pending.
+					}
+					
 					DataService.clear();
 				}
 			}
