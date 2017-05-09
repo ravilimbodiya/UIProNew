@@ -1,5 +1,6 @@
 @import "mytheme.scss";
 @import "addons.scss";
+@import "designs.scss";
 
 // This should be in the Valo theme as a shorthand
 $v-layout-margin: $v-layout-margin-top $v-layout-margin-right $v-layout-margin-bottom $v-layout-margin-left !default;
@@ -8,6 +9,9 @@ $v-layout-margin: $v-layout-margin-top $v-layout-margin-right $v-layout-margin-b
 // The actual styles should be defined in mytheme.scss
 
 .mytheme {
+  @include vaadin-tiles-template;
+  @include vaadin-crud-template;
+  @include vaadin-form-template;
   @include addons;
   @include mytheme;
 }

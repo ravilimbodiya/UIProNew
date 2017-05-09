@@ -13,7 +13,12 @@ import com.uipro.dataservices.UiproRequestDataService;
 import com.uipro.entity.ComponentDetail;
 import com.uipro.entity.UiproRequest;
 import com.uipro.utility.Constants;
+import com.uipro.views.ContactUsView;
+import com.uipro.views.FooterView;
+import com.uipro.views.HeaderView;
 import com.uipro.views.MainScreen;
+import com.uipro.views.SimpleLoginView;
+import com.uipro.views.TestView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Viewport;
@@ -58,7 +63,9 @@ public class MyUI extends UI {
 		Responsive.makeResponsive(this);
 		setLocale(vaadinRequest.getLocale());
 		getPage().setTitle("UIPro");
-
+		globalLayout.setSizeFull();
+		globalLayout.addStyleName("custom-scrollable-layout");
+		globalLayout.addStyleName("class-for-download");
 		// Check user validity
 		if (!accessControl.isUserSignedIn()) {
 			setContent(new LoginScreen(accessControl, new LoginListener() {
@@ -87,12 +94,31 @@ public class MyUI extends UI {
 							.getRequestData();
 					
 					//if user asked some custom components
-					if (uiproReqObj.getTemplate() == null) {
+					if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
 						ComponentDetail cd = parseComponentFromRequest(uiproReqObj);
 						addComponentToUI(cd);
 					} else {
+						//Removing previous components to load newly requested theme.
+						globalLayout.removeAllComponents();
 						// draw the specified template for him
-						//TODO: Pending.
+						ComponentDetail cdObject = new ComponentDetail();
+						if(uiproReqObj.getTemplate().equalsIgnoreCase("login")){
+							cdObject.setLoginViewTemplate(new SimpleLoginView());
+							cdObject.setAlignment(Alignment.TOP_CENTER);
+						} else if(uiproReqObj.getTemplate().equalsIgnoreCase("register")){
+							cdObject.setTestViewTemplate(new TestView());
+							cdObject.setAlignment(Alignment.TOP_CENTER);
+						} else if(uiproReqObj.getTemplate().equalsIgnoreCase("header")){
+							cdObject.setHeaderViewTemplate(new HeaderView());
+							cdObject.setAlignment(Alignment.TOP_CENTER);
+						} else if(uiproReqObj.getTemplate().equalsIgnoreCase("footer")){
+							cdObject.setFooterViewTemplate(new FooterView());
+							cdObject.setAlignment(Alignment.TOP_CENTER);
+						} else if(uiproReqObj.getTemplate().equalsIgnoreCase("contactus")){
+							cdObject.setContactUsViewTemplate(new ContactUsView());
+							cdObject.setAlignment(Alignment.TOP_CENTER);
+						}
+						addComponentToUI(cdObject);
 					}
 					
 					DataService.clear();
@@ -194,8 +220,7 @@ public class MyUI extends UI {
 	// this fn will take an component detail object and put that on the layout
 	public void addComponentToUI(ComponentDetail cd) {
 		globalLayout.addComponent(cd.getComponent());
-		globalLayout
-				.setComponentAlignment(cd.getComponent(), cd.getAlignment());
+		globalLayout.setComponentAlignment(cd.getComponent(), cd.getAlignment());
 	}
 
 	protected void showMainView() {

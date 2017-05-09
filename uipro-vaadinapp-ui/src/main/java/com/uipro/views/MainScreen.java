@@ -35,17 +35,18 @@ public class MainScreen extends HorizontalLayout {
 				RealTimeDesignView.VIEW_NAME, RealTimeDesignView.VIEW_NAME,
 				FontAwesome.EYE);
 		menu.addView(new MyDesigns(), MyDesigns.VIEW_NAME,
-				MyDesigns.VIEW_NAME, FontAwesome.INFO_CIRCLE);
-		menu.addView(new ProfileView(), ProfileView.VIEW_NAME,
-				ProfileView.VIEW_NAME, FontAwesome.INFO_CIRCLE);
-		menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME,
-				FontAwesome.INFO_CIRCLE);
+				MyDesigns.VIEW_NAME, FontAwesome.DASHBOARD);
+		menu.addView(new UserProfileView(), UserProfileView.VIEW_NAME,
+				UserProfileView.VIEW_NAME, FontAwesome.USER);
+//		menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME,
+//				FontAwesome.INFO_CIRCLE);
 		navigator.addViewChangeListener(viewChangeListener);
 
 		addComponent(menu);
 		addComponent(viewContainer);
 		setExpandRatio(viewContainer, 1);
 		setSizeFull();
+		navigator.navigateTo(RealTimeDesignView.VIEW_NAME);
 	}
 
 	// notify the view menu about view changes so that it can display which view

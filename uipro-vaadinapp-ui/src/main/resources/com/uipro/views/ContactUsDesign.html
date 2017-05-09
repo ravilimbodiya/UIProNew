@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="7.7.7">
+ </head>
+ <body>
+  <vaadin-vertical-layout style-name="crud-template" spacing responsive size-full margin>
+   <vaadin-css-layout responsive :middle :center>
+    <vaadin-css-layout style-name="section" responsive width-full>
+     <vaadin-label style-name="h2 bold" responsive size-auto plain-text>
+       Contact Us 
+     </vaadin-label>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="First name:" style-name="small" width-full _id="firstName"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Last name:" style-name="small" width-full _id="lastName"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Job title:" style-name="small" width-full _id="jobTitle"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Phone number:" style-name="small" width-full _id="phoneNumber"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Email:" style-name="small" width-full _id="email"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Company:" style-name="small" width-full _id="company"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-field caption="Web page URL:" style-name="small" width-full _id="url"></vaadin-text-field>
+    </vaadin-css-layout>
+    <vaadin-css-layout style-name="section half" responsive width="50%">
+     <vaadin-text-area caption="Notes:" width-full _id="notes"></vaadin-text-area>
+    </vaadin-css-layout>
+    <vaadin-horizontal-layout style-name="buttons" spacing responsive width-full height="50px">
+     <vaadin-button style-name="small primary" height-full plain-text _id="send" :middle :right>
+       Send 
+     </vaadin-button>
+     <vaadin-button style-name="small" responsive height-full plain-text _id="cancel" :middle>
+       Cancel 
+     </vaadin-button>
+    </vaadin-horizontal-layout>
+   </vaadin-css-layout>
+  </vaadin-vertical-layout>
+ </body>
+</html>

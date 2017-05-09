@@ -1,20 +1,30 @@
 package com.vaadin.uipro_vaadinapp.samples.crud;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Collection;
 
 import com.uipro.entity.Product;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.JavaScript;
+import com.vaadin.ui.JavaScriptFunction;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
+
+import elemental.json.JsonArray;
 
 /**
  * A view for performing create-read-update-delete operations on products.
@@ -33,7 +43,7 @@ public class RealTimeDesignView extends CssLayout implements View {
     private ProductForm form;
 
     private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
-    private Button newProduct;
+    private Button saveDesignButton;
 
     public RealTimeDesignView(VerticalLayout realTimeDesignViewerLayout) {
         setSizeFull();
@@ -87,15 +97,23 @@ public class RealTimeDesignView extends CssLayout implements View {
 	public HorizontalLayout createTopBar(String heading) {
         Label headingLabel = new Label(heading);
         headingLabel.addStyleName("heading-label");
-        newProduct = new Button("Save Design");
-        newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        
+        saveDesignButton = new Button("Save Design");
+        saveDesignButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        saveDesignButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 7198740271637519085L;
 
+			@Override
+            public void buttonClick(Button.ClickEvent event) {
+				JavaScript.getCurrent().execute("print();");
+            }
+        });
+
+     
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setSpacing(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(headingLabel);
-        topLayout.addComponent(newProduct);
+        topLayout.addComponent(saveDesignButton);
         topLayout.setComponentAlignment(headingLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(headingLabel, 1);
         topLayout.setStyleName("top-bar");
@@ -116,7 +134,7 @@ public class RealTimeDesignView extends CssLayout implements View {
     }
 
     public void setNewProductEnabled(boolean enabled) {
-        newProduct.setEnabled(enabled);
+        saveDesignButton.setEnabled(enabled);
     }
 
     public void clearSelection() {

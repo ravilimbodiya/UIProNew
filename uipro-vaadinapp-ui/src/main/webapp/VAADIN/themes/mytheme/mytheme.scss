@@ -123,7 +123,9 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
       }
     }
   }
-
+  .custom-scrollable-layout{
+    overflow: auto !important;
+  }
   // makes the CRUD view keep the sidebar editor within the view as sidebar is absolutely positioned
   .crud-view {
   	position: relative;
@@ -207,7 +209,13 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
       padding: $v-unit-size !important;
     }
   }
+  .class-for-download {
+    border: 2px solid #00bcd4;
+    box-shadow: 5px 5px 10px;
+    margin-top: 10px;
+    border-radius: 4px;
 
+  }
   // Style rules for smaller display sizes
 
   // No top menu on the login view, login screen layout changes
