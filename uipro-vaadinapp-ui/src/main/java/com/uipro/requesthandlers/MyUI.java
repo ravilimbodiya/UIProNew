@@ -1,7 +1,5 @@
 package com.uipro.requesthandlers;
 
-
-
 import javax.servlet.annotation.WebServlet;
 
 import com.uipro.authentication.AccessControl;
@@ -27,13 +25,7 @@ import com.vaadin.event.UIEvents;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -92,10 +84,9 @@ public class MyUI extends UI {
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj
 							.getRequestData();
-					
 					//if user asked some custom components
 					if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
-						ComponentDetail cd = parseComponentFromRequest(uiproReqObj);
+						ComponentDetail cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
 						addComponentToUI(cd);
 					} else {
 						//Removing previous components to load newly requested theme.
@@ -120,101 +111,11 @@ public class MyUI extends UI {
 						}
 						addComponentToUI(cdObject);
 					}
-					
+
 					DataService.clear();
 				}
 			}
 		});
-	}
-
-	private ComponentDetail parseComponentFromRequest(UiproRequest reqObj) {
-		ComponentDetail cdObject = new ComponentDetail();
-
-		Alignment alignment = parseComponentAlignment(reqObj);
-		Component component = parseComponentProp(reqObj);
-
-		cdObject.setAlignment(alignment);
-		cdObject.setComponent(component);
-
-		return cdObject;
-
-	}
-
-	private Component parseComponentProp(UiproRequest reqObj) {
-		String elementType = reqObj.getElementType().toLowerCase();
-		Component c = null;
-
-		switch (elementType) {
-		case Constants.BUTTON:
-			c = new Button();
-			fillButtonProperties(reqObj, c);
-			break;
-		case Constants.TEXTFIELD:
-			c = new TextField();
-			fillTextFieldProperties(reqObj, c);
-			break;
-		case Constants.CHECKBOX:
-			c = new CheckBox();
-			break;
-		case Constants.LABEL:
-			c = (Component) new Label();
-			fillLabelProperties(reqObj, c);
-			break;
-		case Constants.DROPDOWN:
-			break;
-		}
-		return c;
-	}
-
-	private void fillLabelProperties(UiproRequest reqObj, Component label) {
-		label.setCaption(reqObj.getElementValue());
-	}
-
-	private void fillTextFieldProperties(UiproRequest reqObj, Component c) {
-
-	}
-
-	private void fillButtonProperties(UiproRequest reqObj, Component button) {
-		String buttonLabel = reqObj.getElementValue();
-		if (buttonLabel == null || buttonLabel.length() == 0) {
-			button.setCaption(Constants.BUTTONLABEL);
-		} else {
-			button.setCaption(buttonLabel);
-		}
-
-		button.setId(reqObj.getElementId());
-		((AbstractComponent) button).setResponsive(true);
-	}
-
-	private Alignment parseComponentAlignment(UiproRequest reqObj) {
-		String elementPosition = reqObj.getElementPosition();
-		Alignment a = Constants.ALIGNMENT;
-
-		if (elementPosition != null && elementPosition.length() > 0) {
-			switch (elementPosition.toLowerCase()) {
-			case "top_left":
-				return Alignment.TOP_LEFT;
-			case "top_right":
-				return Alignment.TOP_RIGHT;
-			case "top_center":
-				return Alignment.TOP_CENTER;
-			case "middle_left":
-				return Alignment.MIDDLE_LEFT;
-			case "middle_right":
-				return Alignment.MIDDLE_RIGHT;
-			case "bottom_left":
-				return Alignment.BOTTOM_LEFT;
-			case "bottom_center":
-				return Alignment.BOTTOM_CENTER;
-			case "bottom_right":
-				return Alignment.BOTTOM_RIGHT;
-			case "middle_center":
-				return Alignment.MIDDLE_CENTER;
-			default:
-				return a;
-			}
-		} else
-			return a;
 	}
 
 	// this fn will take an component detail object and put that on the layout
