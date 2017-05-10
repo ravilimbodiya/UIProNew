@@ -26,10 +26,10 @@ public class UIComponentHelper {
 	}
 	
 	private static Component parseComponentProp(UiproRequest reqObj) {
-		String elementType = reqObj.getElementType().toLowerCase();
+		String element = reqObj.getElement().toLowerCase();
 		Component c = null;
 
-		switch (elementType) {
+		switch (element) {
 		case Constants.BUTTON:
 			c = new Button();
 			fillButtonProperties(reqObj, c);

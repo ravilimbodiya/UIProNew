@@ -15,11 +15,9 @@ public class UiproRequest implements Serializable {
     private boolean isNewPage = false;
     private String template;
     private String element;
-    private String elementType;
     private String elementName;
     private String elementId;
     private String elementPosition;
-    private String elementColor;
     private String elementValue;
     
     public UiproRequest() {
@@ -28,10 +26,8 @@ public class UiproRequest implements Serializable {
     	elementValue = "button";
     	template = null;
     	element = "button";
-    	elementType = "button";
     	elementName = "button";
     	elementPosition = "top_center";
-    	elementColor = "red";
     	elementId = "button1";
 	}
     
@@ -42,11 +38,9 @@ public class UiproRequest implements Serializable {
 		this.isNewPage = isNewPage;
 		this.template = template;
 		this.element = element;
-		this.elementType = elementType;
 		this.elementName = elementName;
 		this.elementId = elementId;
 		this.elementPosition = elementPosition;
-		this.elementColor = elementColor;
 		this.elementValue = elementValue;
 	}
 
@@ -82,14 +76,6 @@ public class UiproRequest implements Serializable {
 		this.element = element;
 	}
 
-	public String getElementType() {
-		return elementType;
-	}
-
-	public void setElementType(String elementType) {
-		this.elementType = elementType;
-	}
-
 	public String getElementName() {
 		return elementName;
 	}
@@ -112,14 +98,6 @@ public class UiproRequest implements Serializable {
 
 	public void setElementPosition(String elementPosition) {
 		this.elementPosition = elementPosition;
-	}
-
-	public String getElementColor() {
-		return elementColor;
-	}
-
-	public void setElementColor(String elementColor) {
-		this.elementColor = elementColor;
 	}
 
 	public String getElementValue() {

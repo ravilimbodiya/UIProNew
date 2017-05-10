@@ -84,8 +84,11 @@ public class MyUI extends UI {
 				if (uiproRequestServiceObj != null) {
 					UiproRequest uiproReqObj = uiproRequestServiceObj
 							.getRequestData();
-					//if user asked some custom components
-					if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
+					if(uiproReqObj.isNewPage()){
+						//Remove all existing components from the layout
+						globalLayout.removeAllComponents();
+					} else if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
+						//if user asked some custom components
 						ComponentDetail cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
 						addComponentToUI(cd);
 					} else {

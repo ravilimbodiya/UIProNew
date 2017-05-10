@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.uipro.entity.UiproRequest;
 
 /**
- * Back-end service interface for retrieving and updating product data.
+ * Back-end service interface.
  */
 public abstract class DataService implements Serializable {
 
