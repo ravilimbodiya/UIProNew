@@ -27,10 +27,14 @@ public class LoginScreen extends CssLayout {
 	 */
 	private static final long serialVersionUID = 6053693865983225782L;
 	private TextField userid;
+	private TextField firstName;
+	private TextField lastName;
+	private TextField email;
     //private Label uiproLabel;
     private PasswordField password;
     private Button login;
-    private Button forgotPassword;
+    private Button signup;
+    private Button signupButton;
     private LoginListener loginListener;
     private AccessControl accessControl;
 
@@ -99,8 +103,8 @@ public class LoginScreen extends CssLayout {
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         login.addStyleName(ValoTheme.BUTTON_DANGER);
 
-        buttons.addComponent(forgotPassword = new Button("Forgot password?"));
-        forgotPassword.addClickListener(new Button.ClickListener() {
+        buttons.addComponent(signupButton = new Button("Don't have User ID? "));
+        signupButton.addClickListener(new Button.ClickListener() {
             /**
 			 * 
 			 */
@@ -108,10 +112,63 @@ public class LoginScreen extends CssLayout {
 
 			@Override
             public void buttonClick(Button.ClickEvent event) {
-                showNotification(new Notification("Hint: Try again."));
+				buildSignupForm();
             }
         });
-        forgotPassword.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        signupButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        return loginForm;
+    }
+    
+    private Component buildSignupForm() {
+        FormLayout loginForm = new FormLayout();
+
+        loginForm.addStyleName("login-form");
+        loginForm.setSizeUndefined();
+        loginForm.setMargin(false);
+        //loginForm.addComponent(uiproLabel = new Label("UIPro"));
+        loginForm.addComponent(firstName = new TextField("First Name"));
+        firstName.setWidth(15, Unit.EM);
+        loginForm.addComponent(lastName = new TextField("Last Name"));
+        lastName.setWidth(15, Unit.EM);
+        loginForm.addComponent(email = new TextField("Email ID"));
+        email.setWidth(15, Unit.EM);
+        CssLayout buttons = new CssLayout();
+        buttons.setStyleName("buttons");
+        loginForm.addComponent(buttons);
+
+        buttons.addComponent(signup = new Button("Signup"));
+        signup.setDisableOnClick(true);
+        signup.addClickListener(new Button.ClickListener() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1364534671489651010L;
+
+			@Override
+            public void buttonClick(Button.ClickEvent event) {
+                try {
+                    //signup();
+                } finally {
+                	signup.setEnabled(true);
+                }
+            }
+        });
+        signup.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        signup.addStyleName(ValoTheme.BUTTON_DANGER);
+
+        buttons.addComponent(login = new Button("Login"));
+        login.addClickListener(new Button.ClickListener() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -8580559237140997724L;
+
+			@Override
+            public void buttonClick(Button.ClickEvent event) {
+				buildLoginForm();
+            }
+        });
+        login.addStyleName(ValoTheme.BUTTON_PRIMARY);
         return loginForm;
     }
 
