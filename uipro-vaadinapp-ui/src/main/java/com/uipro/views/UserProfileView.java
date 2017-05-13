@@ -10,7 +10,9 @@ import com.uipro.entity.UserProfile;
 import com.uipro.utility.DbUtil;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class UserProfileView extends UserProfileDesign implements View {
@@ -75,6 +77,9 @@ public class UserProfileView extends UserProfileDesign implements View {
 				UserProfile profile = getUserDataFromProfile();
 				profile.toString();
 				saveUserProfileInDb(profile);
+				showNotification(new Notification("Success!",
+	                    "Your profile information is updated.",
+	                    Notification.Type.HUMANIZED_MESSAGE));
 			}
 
 		});
@@ -126,6 +131,13 @@ public class UserProfileView extends UserProfileDesign implements View {
 		}
 		return null;
 	}
+	
+	private void showNotification(Notification notification) {
+        // keep the notification visible a little while after moving the
+        // mouse, or until clicked
+        notification.setDelayMsec(2000);
+        notification.show(Page.getCurrent());
+    }
 
 	private UserProfile getUserDataFromProfile() {
 		String fn = firstName.getValue();
