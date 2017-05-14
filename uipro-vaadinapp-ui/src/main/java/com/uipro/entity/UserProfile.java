@@ -1,12 +1,21 @@
 package com.uipro.entity;
 
 public class UserProfile {
+	private String userid;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phoneNo;
 	private String dob;
 
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	
 	public String getLastName() {
 		return lastName;
 	}

@@ -1,7 +1,15 @@
 package com.uipro.authentication;
 
-import java.io.Serializable;
+import static com.mongodb.client.model.Filters.eq;
 
+import java.io.Serializable;
+import java.util.Random;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.uipro.entity.UserProfile;
+import com.uipro.utility.DbUtil;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -37,6 +45,8 @@ public class LoginScreen extends CssLayout {
     private Button signupButton;
     private LoginListener loginListener;
     private AccessControl accessControl;
+    Component loginFormComponent;
+    Component signupFormComponent;
 
     public LoginScreen(AccessControl accessControl, LoginListener loginListener) {
         this.loginListener = loginListener;
@@ -49,16 +59,23 @@ public class LoginScreen extends CssLayout {
         addStyleName("login-screen");
 
         // login form, centered in the available part of the screen
-        Component loginForm = buildLoginForm();
+        loginFormComponent  = buildLoginForm();
+        signupFormComponent = buildSignupForm();
 
         // layout to center login form when there is sufficient screen space
         // - see the theme for how this is made responsive for various screen
         // sizes
         VerticalLayout centeringLayout = new VerticalLayout();
+        
         centeringLayout.setStyleName("centering-layout");
-        centeringLayout.addComponent(loginForm);
-        centeringLayout.setComponentAlignment(loginForm,
+        centeringLayout.addComponent(loginFormComponent);
+        centeringLayout.setComponentAlignment(loginFormComponent,
                 Alignment.MIDDLE_CENTER);
+        
+        centeringLayout.addComponent(signupFormComponent);
+        centeringLayout.setComponentAlignment(signupFormComponent,
+                Alignment.MIDDLE_CENTER);
+        signupFormComponent.setVisible(false);
 
         // information text about logging in
         CssLayout loginInformation = buildLoginInformation();
@@ -112,7 +129,8 @@ public class LoginScreen extends CssLayout {
 
 			@Override
             public void buttonClick(Button.ClickEvent event) {
-				buildSignupForm();
+				loginFormComponent.setVisible(false);
+				signupFormComponent.setVisible(true);
             }
         });
         signupButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -120,21 +138,21 @@ public class LoginScreen extends CssLayout {
     }
     
     private Component buildSignupForm() {
-        FormLayout loginForm = new FormLayout();
+        FormLayout signupForm = new FormLayout();
 
-        loginForm.addStyleName("login-form");
-        loginForm.setSizeUndefined();
-        loginForm.setMargin(false);
+        signupForm.addStyleName("login-form");
+        signupForm.setSizeUndefined();
+        signupForm.setMargin(false);
         //loginForm.addComponent(uiproLabel = new Label("UIPro"));
-        loginForm.addComponent(firstName = new TextField("First Name"));
+        signupForm.addComponent(firstName = new TextField("First Name"));
         firstName.setWidth(15, Unit.EM);
-        loginForm.addComponent(lastName = new TextField("Last Name"));
+        signupForm.addComponent(lastName = new TextField("Last Name"));
         lastName.setWidth(15, Unit.EM);
-        loginForm.addComponent(email = new TextField("Email ID"));
+        signupForm.addComponent(email = new TextField("Email ID"));
         email.setWidth(15, Unit.EM);
         CssLayout buttons = new CssLayout();
         buttons.setStyleName("buttons");
-        loginForm.addComponent(buttons);
+        signupForm.addComponent(buttons);
 
         buttons.addComponent(signup = new Button("Signup"));
         signup.setDisableOnClick(true);
@@ -147,7 +165,10 @@ public class LoginScreen extends CssLayout {
 			@Override
             public void buttonClick(Button.ClickEvent event) {
                 try {
-                    //signup();
+                    String userId = signup();
+                    userid.setValue(userId);
+                    loginFormComponent.setVisible(true);
+    				signupFormComponent.setVisible(false);
                 } finally {
                 	signup.setEnabled(true);
                 }
@@ -156,7 +177,7 @@ public class LoginScreen extends CssLayout {
         signup.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         signup.addStyleName(ValoTheme.BUTTON_DANGER);
 
-        buttons.addComponent(login = new Button("Login"));
+        buttons.addComponent(login = new Button("Already have User ID?"));
         login.addClickListener(new Button.ClickListener() {
             /**
 			 * 
@@ -165,13 +186,26 @@ public class LoginScreen extends CssLayout {
 
 			@Override
             public void buttonClick(Button.ClickEvent event) {
-				buildLoginForm();
+				loginFormComponent.setVisible(true);
+				signupFormComponent.setVisible(false);
             }
         });
         login.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        return loginForm;
+        return signupForm;
     }
 
+    private String getRandomNumberInRange(int min, int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		Integer randNum =  r.nextInt((max - min) + 1) + min;
+		String randNumStr = randNum.toString();
+		return randNumStr;
+	}
+    
     private CssLayout buildLoginInformation() {
         CssLayout loginInformation = new CssLayout();
         loginInformation.setStyleName("login-information");
@@ -193,6 +227,30 @@ public class LoginScreen extends CssLayout {
             userid.focus();
         }
     }
+
+	private String signup() {
+		String userid = getRandomNumberInRange(100000, 999999);
+		//Checking user id validity
+		MongoCollection<Document> userColl = (MongoCollection<Document>) DbUtil.getCollection("uipro_users_info");
+
+		while(userColl.count(eq("uid", userid)) > 0){
+			userid = getRandomNumberInRange(100000, 999999);
+		} 
+		Document doc = new Document();
+		doc.append("uid", userid);
+		doc.append("username", firstName.getValue()+"_"+lastName.getValue());
+		doc.append("firstName", firstName.getValue());
+		doc.append("lastName", lastName.getValue());
+		doc.append("email", email.getValue());
+		doc.append("phoneNo", "");
+		doc.append("dob", "");
+		userColl.insertOne(doc);
+		DbUtil.releaseResources();
+		showNotification(new Notification("Success! Your User ID is: "+userid,
+                "Please save this User ID for login to UIPro portal.",
+                Notification.Type.TRAY_NOTIFICATION));
+		return userid;
+	}
 
     private void showNotification(Notification notification) {
         // keep the notification visible a little while after moving the
