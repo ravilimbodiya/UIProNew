@@ -44,6 +44,7 @@ public class UIComponentHelper {
 			break;
 		case Constants.LABEL:
 			c = (Component) new Label();
+			c.setSizeUndefined();
 			fillLabelProperties(reqObj, c);
 			break;
 		case Constants.DROPDOWN:
