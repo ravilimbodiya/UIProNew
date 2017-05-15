@@ -13,6 +13,7 @@ public class UiproRequest implements Serializable {
 	@NotNull
     private int uid = -1;
     private boolean isNewPage = false;
+    private boolean isSaveRequest = false;
     private String template;
     private String element;
     private String elementName;
@@ -23,6 +24,7 @@ public class UiproRequest implements Serializable {
     public UiproRequest() {
     	uid = -1;
     	isNewPage = false;
+    	isSaveRequest = false;
     	elementValue = "button";
     	template = null;
     	element = "button";
@@ -31,11 +33,12 @@ public class UiproRequest implements Serializable {
     	elementId = "button1";
 	}
     
-	public UiproRequest(int uid, boolean isNewPage, String template, String element, String elementType,
+	public UiproRequest(int uid, boolean isNewPage, boolean isSaveRequest, String template, String element, String elementType,
 			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
 		super();
 		this.uid = uid;
 		this.isNewPage = isNewPage;
+		this.isSaveRequest = isSaveRequest;
 		this.template = template;
 		this.element = element;
 		this.elementName = elementName;
@@ -58,6 +61,14 @@ public class UiproRequest implements Serializable {
 
 	public void setNewPage(boolean isNewPage) {
 		this.isNewPage = isNewPage;
+	}
+
+	public boolean isSaveRequest() {
+		return isSaveRequest;
+	}
+
+	public void setSaveRequest(boolean isSaveRequest) {
+		this.isSaveRequest = isSaveRequest;
 	}
 
 	public String getTemplate() {

@@ -89,6 +89,7 @@ public class UiproRequestListener extends HttpServlet {
 			}
 
 			reqObj.setNewPage((boolean) reqParamsJson.get("isNewPage"));
+			reqObj.setSaveRequest((boolean) reqParamsJson.get("isSaveRequest"));
 			
 			String template = (String)reqParamsJson.get("template");
 			if(template != null && template.length() > 0) {
