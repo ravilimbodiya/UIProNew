@@ -23,6 +23,12 @@ public class BasicAccessControl implements AccessControl {
 	public boolean signIn(String userid) {
 		if (userid == null || userid.isEmpty())
             return false;
+		if (userid.equals("uipro_admin")){
+			// ADMIN LOGIN
+			CurrentUser.set(userid);
+			return true;
+		}
+            
 		//Checking user id validity
 		MongoCollection<Document> userColl = (MongoCollection<Document>) DbUtil.getCollection("uipro_users_info");
 		
@@ -54,9 +60,9 @@ public class BasicAccessControl implements AccessControl {
 
     @Override
     public boolean isUserInRole(String role) {
-        if ("admin".equals(role)) {
+        if ("uipro_admin".equals(role)) {
             // Only the "admin" user is in the "admin" role
-            return getPrincipalName().equals("admin");
+            return getPrincipalName().equals("uipro_admin");
         }
 
         // All users are in all non-admin roles

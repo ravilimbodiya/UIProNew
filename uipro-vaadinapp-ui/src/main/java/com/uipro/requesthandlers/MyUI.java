@@ -66,11 +66,20 @@ public class MyUI extends UI {
 
 				@Override
 				public void loginSuccessful() {
-					showMainView();
+					if(accessControl.isUserInRole("uipro_admin")){
+						showAdminView();
+					} else{
+						showMainView();
+					}
+					
 				}
 			}));
 		} else {
-			showMainView();
+			if(accessControl.isUserInRole("uipro_admin")){
+				showAdminView();
+			} else{
+				showMainView();
+			}
 		}
 		viewerLayout.addComponent(globalLayout);
 		setPollInterval(Constants.POLL_DURATION);
@@ -131,6 +140,12 @@ public class MyUI extends UI {
 	protected void showMainView() {
 		addStyleName(ValoTheme.UI_WITH_MENU);
 		setContent(new MainScreen(MyUI.this));
+		getNavigator().navigateTo(getNavigator().getState());
+	}
+	
+	protected void showAdminView() {
+		addStyleName(ValoTheme.UI_WITH_MENU);
+		setContent(new MainScreen(MyUI.this, true));
 		getNavigator().navigateTo(getNavigator().getState());
 	}
 

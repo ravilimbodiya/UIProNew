@@ -217,6 +217,13 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     border-radius: 4px;
 
   }
+  .admin-tiles{
+    background-color: #fff;
+    margin-left: 2px;
+    margin-right: 2px;
+    box-shadow: 5px 5px 10px;
+    border-radius: 4px;
+  }
   // Style rules for smaller display sizes
 
   // No top menu on the login view, login screen layout changes

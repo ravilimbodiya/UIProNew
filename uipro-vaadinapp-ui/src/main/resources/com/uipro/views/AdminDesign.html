@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;mytheme&quot;}">
+  <meta name="vaadin-version" content="7.7.7">
+  <meta name="package-mapping" content="com_uipro_views:com.uipro.views">
+ </head>
+ <body>
+  <vaadin-vertical-layout style-name="crud-template" responsive size-auto>
+   <vaadin-css-layout style-name="tiles" responsive width-full :center>
+    <vaadin-css-layout style-name="row" responsive width-full>
+     <vaadin-css-layout style-name="tile quarter">
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
+       <vaadin-label style-name="title" responsive height="23px" plain-text>
+         Total Users 
+       </vaadin-label>
+       <vaadin-label>
+        <b>80</b>
+       </vaadin-label>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" width="25%">
+       <vaadin-label style-name="title" height="24px" plain-text>
+         Total Designs 
+       </vaadin-label>
+       <vaadin-label>
+        <b>240</b>
+       </vaadin-label>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
+       <vaadin-label style-name="title" height="24px" plain-text>
+         Total Saved 
+       </vaadin-label>
+       <vaadin-label>
+        <b>75</b>
+       </vaadin-label>
+      </vaadin-css-layout>
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
+       <vaadin-label style-name="title" height="24px" plain-text>
+         Memory Used 
+       </vaadin-label>
+       <vaadin-label>
+        <b>1.5 GB</b>
+       </vaadin-label>
+      </vaadin-css-layout>
+     </vaadin-css-layout>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+   <vaadin-vertical-split-panel height-auto></vaadin-vertical-split-panel>
+   <vaadin-horizontal-layout style-name="top-bar" width-full height="50px">
+    <vaadin-horizontal-layout spacing responsive width-full :middle :center :expand>
+     <vaadin-label responsive size-auto plain-text>
+       List of Users 
+     </vaadin-label>
+     <vaadin-text-field icon="fonticon://FontAwesome/f002" input-prompt="Search" style-name="small inline-icon search" width-full _id="search" :right></vaadin-text-field>
+    </vaadin-horizontal-layout>
+   </vaadin-horizontal-layout>
+   <vaadin-css-layout style-name="content" size-full :expand>
+    <vaadin-css-layout style-name="list" size-full>
+     <vaadin-grid responsive width-full height="156px" _id="list">
+      <table>
+       <colgroup>
+        <col property-id="Users" sortable>
+        <col property-id="Age" sortable>
+        <col property-id="Designs" sortable>
+        <col property-id="Manage" sortable>
+       </colgroup>
+       <thead>
+        <tr default>
+         <th plain-text>Users</th>
+         <th plain-text>Age</th>
+         <th plain-text>Designs Created</th>
+         <th plain-text>Manage</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>Customer 1</td>
+         <td>24</td>
+         <td>202</td>
+         <td>Manage</td>
+        </tr>
+        <tr>
+         <td>Customer 2</td>
+         <td>40</td>
+         <td>29</td>
+         <td>Manage</td>
+        </tr>
+       </tbody>
+      </table>
+     </vaadin-grid>
+    </vaadin-css-layout>
+   </vaadin-css-layout>
+  </vaadin-vertical-layout>
+ </body>
+</html>

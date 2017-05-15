@@ -48,6 +48,28 @@ public class MainScreen extends HorizontalLayout {
 		setSizeFull();
 		navigator.navigateTo(RealTimeDesignView.VIEW_NAME);
 	}
+	
+	public MainScreen(MyUI ui, boolean isAdmin) {
+
+		setStyleName("main-screen");
+
+		CssLayout viewContainer = new CssLayout();
+		viewContainer.addStyleName("valo-content");
+		viewContainer.setSizeFull();
+
+		final Navigator navigator = new Navigator(ui, viewContainer);
+		navigator.setErrorView(ErrorView.class);
+		menu = new Menu(navigator);
+		menu.addView(new AdminView(), AdminView.VIEW_NAME,
+				AdminView.VIEW_NAME, FontAwesome.DASHBOARD);
+		navigator.addViewChangeListener(viewChangeListener);
+
+		addComponent(menu);
+		addComponent(viewContainer);
+		setExpandRatio(viewContainer, 1);
+		setSizeFull();
+		navigator.navigateTo(AdminView.VIEW_NAME);
+	}
 
 	// notify the view menu about view changes so that it can display which view
 	// is currently active

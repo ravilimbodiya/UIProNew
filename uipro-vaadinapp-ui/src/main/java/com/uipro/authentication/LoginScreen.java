@@ -101,7 +101,7 @@ public class LoginScreen extends CssLayout {
         loginForm.addComponent(buttons);
 
         buttons.addComponent(login = new Button("Login"));
-        login.setDisableOnClick(true);
+        //login.setDisableOnClick(true);
         login.addClickListener(new Button.ClickListener() {
             /**
 			 * 
