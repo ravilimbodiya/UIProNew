@@ -40,6 +40,7 @@ public class UIComponentHelper {
 			break;
 		case Constants.CHECKBOX:
 			c = new CheckBox();
+			fillCheckboxProperties(reqObj, c);
 			break;
 		case Constants.LABEL:
 			c = (Component) new Label();
@@ -64,6 +65,15 @@ public class UIComponentHelper {
 		}
 		textField.setEnabled(true);
 		textField.setVisible(true);
+	}
+	
+	private static void fillCheckboxProperties(UiproRequest reqObj, Component checkbox) {
+		String checkboxLabel = reqObj.getElementValue();
+		if(checkboxLabel != null && checkboxLabel.length() > 0) {
+			checkbox.setCaption(checkboxLabel);			
+		}
+		checkbox.setEnabled(true);
+		checkbox.setVisible(true);
 	}
 
 	private static void fillButtonProperties(UiproRequest reqObj, Component button) {
@@ -103,6 +113,14 @@ public class UIComponentHelper {
 			case "bottom_right":
 				return Alignment.BOTTOM_RIGHT;
 			case "middle_center":
+				return Alignment.MIDDLE_CENTER;
+			case "left":
+				return Alignment.TOP_LEFT;
+			case "right":
+				return Alignment.TOP_RIGHT;
+			case "center":
+				return Alignment.TOP_CENTER;
+			case "middle":
 				return Alignment.MIDDLE_CENTER;
 			default:
 				return a;

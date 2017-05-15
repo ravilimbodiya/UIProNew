@@ -46,6 +46,7 @@ public class MyUI extends UI {
 
 	private static final long serialVersionUID = -7517282906277130464L;
 	private AccessControl accessControl = new BasicAccessControl();
+	private static VerticalLayout viewerLayout = new VerticalLayout();
 	private static VerticalLayout globalLayout = new VerticalLayout();
 
 	@Override
@@ -55,9 +56,9 @@ public class MyUI extends UI {
 		Responsive.makeResponsive(this);
 		setLocale(vaadinRequest.getLocale());
 		getPage().setTitle("UIPro");
-		globalLayout.setSizeFull();
-		globalLayout.addStyleName("custom-scrollable-layout");
-		globalLayout.addStyleName("class-for-download");
+		viewerLayout.setSizeFull();
+		viewerLayout.addStyleName("custom-scrollable-layout");
+		viewerLayout.addStyleName("class-for-download");
 		// Check user validity
 		if (!accessControl.isUserSignedIn()) {
 			setContent(new LoginScreen(accessControl, new LoginListener() {
@@ -71,7 +72,7 @@ public class MyUI extends UI {
 		} else {
 			showMainView();
 		}
-
+		viewerLayout.addComponent(globalLayout);
 		setPollInterval(Constants.POLL_DURATION);
 
 		addPollListener(new UIEvents.PollListener() {
@@ -138,7 +139,7 @@ public class MyUI extends UI {
 	}
 
 	public static VerticalLayout getGlobalLayout() {
-		return globalLayout;
+		return viewerLayout;
 	}
 
 	public AccessControl getAccessControl() {

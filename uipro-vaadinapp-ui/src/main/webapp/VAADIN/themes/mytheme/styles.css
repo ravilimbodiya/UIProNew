@@ -13791,6 +13791,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .class-for-download {
+	background-color: #fff;
 	border: 2px solid #00bcd4;
 	box-shadow: 5px 5px 10px;
 	margin-top: 10px;

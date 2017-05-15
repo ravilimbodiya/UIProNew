@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.uipro.dataservices.DataService;
 import com.uipro.entity.UiproRequest;
+import com.uipro.exception.UiproGenericException;
 
 /**
  * Application Lifecycle Listener implementation class UiproRequestListener
@@ -30,6 +31,7 @@ public class UiproRequestListener extends HttpServlet {
 		// Reading POST request Parameters
 		StringBuffer jb = new StringBuffer();
 		String line = null;
+		JSONObject jsonResp = new JSONObject();
 		try {
 			BufferedReader reader = request.getReader();
 			while ((line = reader.readLine()) != null)
@@ -46,51 +48,67 @@ public class UiproRequestListener extends HttpServlet {
 
 			System.out.println("Successfully converted to JSON object...");
 			System.out.println("\nJSON Object: " + jsonObj.toJSONString());
+			response.setStatus(HttpServletResponse.SC_OK);
+			jsonResp.put("statusCode", HttpServletResponse.SC_OK);
+			response.setContentType("application/json");
+			response.getWriter().write(jsonResp.toString());
+			response.getWriter().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Error occurred.");
+			jsonResp.put("statusCode", HttpServletResponse.SC_BAD_REQUEST);
+			response.setContentType("application/json");
+			response.getWriter().write(jsonResp.toString());
+			response.getWriter().close();
+			System.out.println("EXCEPTION OCCURRED ----> "+e);
+			
 		}
 	}
 
-	private UiproRequest convertJsonToDataObject(JSONObject reqParamsJson) {
-		UiproRequest reqObj = new UiproRequest();
+	private UiproRequest convertJsonToDataObject(JSONObject reqParamsJson) throws UiproGenericException {
+		try {
+			UiproRequest reqObj = new UiproRequest();
 
-		String uid = (String) reqParamsJson.get("uid");
-		if (uid != null && uid.length() > 0) {
-			reqObj.setUid(Integer.parseInt(uid));
+			String uid = (String) reqParamsJson.get("uid");
+			if (uid != null && uid.length() > 0) {
+				reqObj.setUid(Integer.parseInt(uid));
+			}
+
+			String element = (String) reqParamsJson.get("element");
+			if (element != null && element.length() > 0) {
+				reqObj.setElement(element);
+			}
+
+			String elemName = (String) reqParamsJson.get("elementName");
+			if (elemName != null && elemName.length() > 0) {
+				reqObj.setElementName(elemName);
+			}
+
+			String elemVal = (String) reqParamsJson.get("elementValue");
+			if (elemVal != null) {
+				reqObj.setElementValue(elemVal);
+			}
+
+			reqObj.setNewPage((boolean) reqParamsJson.get("isNewPage"));
+			
+			String template = (String)reqParamsJson.get("template");
+			if(template != null && template.length() > 0) {
+				reqObj.setTemplate(template);
+			} 
+
+			String elemId = (String) reqParamsJson.get("elementId");
+			if(elemId != null && elemId.length() > 0) {
+				reqObj.setElementId(elemId);
+			}
+
+			String elemPos = (String) reqParamsJson.get("elementPosition");
+			if (elemPos != null) {
+				reqObj.setElementPosition(elemPos);
+			}
+
+			return reqObj;
+		} catch (Exception e) {
+			//e.printStackTrace();
+			throw new UiproGenericException(e);
 		}
-
-		String element = (String) reqParamsJson.get("element");
-		if (element != null && element.length() > 0) {
-			reqObj.setElement(element);
-		}
-
-		String elemName = (String) reqParamsJson.get("elementName");
-		if (elemName != null && elemName.length() > 0) {
-			reqObj.setElementName(elemName);
-		}
-
-		String elemVal = (String) reqParamsJson.get("elementValue");
-		if (elemVal != null) {
-			reqObj.setElementValue(elemVal);
-		}
-
-		reqObj.setNewPage((boolean) reqParamsJson.get("isNewPage"));
-		
-		String template = (String)reqParamsJson.get("template");
-		if(template != null && template.length() > 0) {
-			reqObj.setTemplate(template);
-		} 
-
-		String elemId = (String) reqParamsJson.get("elementId");
-		if(elemId != null && elemId.length() > 0) {
-			reqObj.setElementId(elemId);
-		}
-
-		String elemPos = (String) reqParamsJson.get("elementPosition");
-		if (elemPos != null) {
-			reqObj.setElementPosition(elemPos);
-		}
-
-		return reqObj;
 	}
 }
