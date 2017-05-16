@@ -1,5 +1,6 @@
 package com.uipro.views;
 
+import com.uipro.exception.UiproGenericException;
 import com.uipro.requesthandlers.MyUI;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
@@ -22,7 +23,7 @@ public class MainScreen extends HorizontalLayout {
 	private static final long serialVersionUID = 3170050308292436612L;
 	private Menu menu;
 
-	public MainScreen(MyUI ui) {
+	public MainScreen(MyUI ui) throws UiproGenericException {
 
 		try {
 			setStyleName("main-screen");
@@ -52,11 +53,12 @@ public class MainScreen extends HorizontalLayout {
 			navigator.navigateTo(RealTimeDesignView.VIEW_NAME);
 		} catch (Exception e) {
 			//e.printStackTrace();
-			Notification.show("Some error occurred. Please refresh the page and try again.", Type.HUMANIZED_MESSAGE);
+			//Notification.show("Some error occurred. Please refresh the page and try again.", Type.HUMANIZED_MESSAGE);
+			throw new UiproGenericException(e);
 		}
 	}
 	
-	public MainScreen(MyUI ui, boolean isAdmin) {
+	public MainScreen(MyUI ui, boolean isAdmin) throws UiproGenericException{
 
 		try {
 			setStyleName("main-screen");
@@ -79,7 +81,8 @@ public class MainScreen extends HorizontalLayout {
 			navigator.navigateTo(AdminView.VIEW_NAME);
 		} catch (Exception e) {
 			//e.printStackTrace();
-			Notification.show("Some error occurred. Please refresh the page and try again.", Type.HUMANIZED_MESSAGE);
+			//Notification.show("Some error occurred. Please refresh the page and try again.", Type.HUMANIZED_MESSAGE);
+			throw new UiproGenericException(e);
 		}
 	}
 
