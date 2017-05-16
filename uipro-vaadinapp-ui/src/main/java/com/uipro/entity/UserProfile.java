@@ -7,7 +7,9 @@ public class UserProfile {
 	private String email;
 	private String phoneNo;
 	private String dob;
-
+	private String designCount;
+	private String isActive;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -78,6 +80,22 @@ public class UserProfile {
 	public String toString() {
 		System.out.println(firstName+" "+ lastName+ " "+ email+ " "+ phoneNo+ " " + dob);
 		return "";
+	}
+
+	public String getDesignCount() {
+		return designCount;
+	}
+
+	public void setDesignCount(String designCount) {
+		this.designCount = designCount;
+	}
+
+	public String getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
 
 }
