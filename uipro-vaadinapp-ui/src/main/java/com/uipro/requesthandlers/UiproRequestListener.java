@@ -87,7 +87,7 @@ public class UiproRequestListener extends HttpServlet {
 				templateFlag = true;
 			} 
 			
-			if(!templateFlag){
+			if(!templateFlag && !reqObj.isNewPage() && !reqObj.isSaveRequest() && !reqObj.isRemoveLast()){
 				String element = (String) reqParamsJson.get("element");
 				if (element != null && element.length() > 0) {
 					reqObj.setElement(element);
