@@ -244,6 +244,9 @@ public class LoginScreen extends CssLayout {
 		doc.append("email", email.getValue());
 		doc.append("phoneNo", "");
 		doc.append("dob", "");
+		doc.append("isActive", "true");
+		doc.append("designCount", "0");
+		
 		userColl.insertOne(doc);
 		DbUtil.releaseResources();
 		showNotification(new Notification("Success! Your User ID is: "+userid,
