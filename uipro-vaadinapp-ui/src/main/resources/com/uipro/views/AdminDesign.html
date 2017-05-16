@@ -7,10 +7,10 @@
   <meta name="package-mapping" content="com_uipro_views:com.uipro.views">
  </head>
  <body>
-  <vaadin-vertical-layout style-name="crud-template" responsive width="1022px">
-   <vaadin-css-layout style-name="tiles" responsive width="1024px" :center>
+  <vaadin-vertical-layout style-name="crud-template" responsive>
+   <vaadin-css-layout style-name="tiles" responsive width-full :center>
     <vaadin-css-layout style-name="row" width-full>
-     <vaadin-css-layout style-name="tile quarter" width="1020px">
+     <vaadin-css-layout style-name="tile quarter" width-full>
       <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width-full height="86px">
        <vaadin-label style-name="title" responsive height="23px" plain-text>
          Total Users 
@@ -47,42 +47,6 @@
      <vaadin-text-field icon="fonticon://FontAwesome/f002" input-prompt="Search" style-name="small inline-icon search" width-full _id="search" :right></vaadin-text-field>
     </vaadin-horizontal-layout>
    </vaadin-horizontal-layout>
-   <vaadin-css-layout style-name="content" size-full :expand>
-    <vaadin-css-layout style-name="list" size-full>
-     <vaadin-grid responsive width="1022px" height="156px" _id="list">
-      <table>
-       <colgroup>
-        <col property-id="Users" sortable>
-        <col property-id="Age" sortable>
-        <col property-id="Designs" sortable>
-        <col property-id="Manage" sortable>
-       </colgroup>
-       <thead>
-        <tr default>
-         <th plain-text>Users</th>
-         <th plain-text>Age</th>
-         <th plain-text>Designs Created</th>
-         <th plain-text>Manage</th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr>
-         <td>Customer 1</td>
-         <td>24</td>
-         <td>202</td>
-         <td>Manage</td>
-        </tr>
-        <tr>
-         <td>Customer 2</td>
-         <td>40</td>
-         <td>29</td>
-         <td>Manage</td>
-        </tr>
-       </tbody>
-      </table>
-     </vaadin-grid>
-    </vaadin-css-layout>
-   </vaadin-css-layout>
   </vaadin-vertical-layout>
  </body>
 </html>

@@ -85,6 +85,8 @@ public class AdminView extends AdminDesign implements View {
 		// allow setting the row height in theme.
 		Table table = new Table();
 		table.addStyleName("components-inside");
+		table.setWidth("100%");
+		table.setHeight("100%");
 
 		/*
 		 * Define the names and data types of columns. The "default value"
