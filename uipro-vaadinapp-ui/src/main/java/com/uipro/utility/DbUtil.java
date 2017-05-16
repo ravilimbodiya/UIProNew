@@ -53,4 +53,42 @@ public class DbUtil {
 		userColl.updateOne(searchQuery, setQuery);
 
 	}
+	
+	public static void blockUser(String uid) {
+		MongoCollection<Document> userColl = (MongoCollection<Document>) DbUtil
+				.getCollection("uipro_users_info");
+		
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("uid", uid);
+		
+		BasicDBObject updateFields = new BasicDBObject();
+		updateFields.append("isActive", "false");
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("uid", uid);
+		
+		BasicDBObject setQuery = new BasicDBObject();
+		setQuery.append("$set", updateFields);
+
+		userColl.updateOne(searchQuery, setQuery);
+
+	}
+	
+	public static void unblockUser(String uid) {
+		MongoCollection<Document> userColl = (MongoCollection<Document>) DbUtil
+				.getCollection("uipro_users_info");
+		
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("uid", uid);
+		
+		BasicDBObject updateFields = new BasicDBObject();
+		updateFields.append("isActive", "true");
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("uid", uid);
+		
+		BasicDBObject setQuery = new BasicDBObject();
+		setQuery.append("$set", updateFields);
+
+		userColl.updateOne(searchQuery, setQuery);
+
+	}
 }
