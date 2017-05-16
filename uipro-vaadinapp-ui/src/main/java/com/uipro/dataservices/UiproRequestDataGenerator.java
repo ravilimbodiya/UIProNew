@@ -38,9 +38,9 @@ public class UiproRequestDataGenerator {
             "speaking to a big audience", "creating software", "giant needles",
             "elephants", "keeping your wife happy" };
 
-    static UiproRequest createUiproRequestFromJsonRequestParameter(int uid, boolean isNewPage, boolean isSaveRequest, String template, String element, String elementType,
+    static UiproRequest createUiproRequestFromJsonRequestParameter(int uid, boolean isNewPage, boolean isSaveRequest, boolean isRemoveLast, String template, String element, String elementType,
 			String elementName, String elementId, String elementPosition, String elementColor, String elementValue) {
-    	UiproRequest uiproRequestObj = new UiproRequest(uid, isNewPage, isSaveRequest, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);
+    	UiproRequest uiproRequestObj = new UiproRequest(uid, isNewPage, isSaveRequest, isRemoveLast, template, element, elementType, elementName, elementId, elementPosition, elementColor, elementValue);
     	return uiproRequestObj;
     }
 
