@@ -2,6 +2,7 @@ package com.uipro.utility;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -28,6 +29,28 @@ public class DbUtil {
 	}
 	
 	public static void updateDesignCountForUser(String uid) {
+		MongoCollection<Document> userColl = (MongoCollection<Document>) DbUtil
+				.getCollection("uipro_users_info");
 		
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("uid", uid);
+		
+		String designCount = (String) userColl.find(whereQuery).first().get("designCount");
+		int currDesignCount = Integer.valueOf(designCount);
+		
+		System.out.println("Current design count ="+ currDesignCount);
+		
+		int newDesignCount = currDesignCount + 1;
+		
+		BasicDBObject updateFields = new BasicDBObject();
+		updateFields.append("designCount", String.valueOf(newDesignCount));
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("uid", uid);
+		
+		BasicDBObject setQuery = new BasicDBObject();
+		setQuery.append("$set", updateFields);
+
+		userColl.updateOne(searchQuery, setQuery);
+
 	}
 }

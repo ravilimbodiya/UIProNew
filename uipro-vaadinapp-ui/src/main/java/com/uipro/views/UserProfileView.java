@@ -6,15 +6,14 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.uipro.authentication.CurrentUser;
-import com.uipro.entity.AdminStats;
 import com.uipro.entity.UserProfile;
 import com.uipro.utility.DbUtil;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification;
 
 public class UserProfileView extends UserProfileDesign implements View {
 
@@ -26,6 +25,7 @@ public class UserProfileView extends UserProfileDesign implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
 		UserProfile profile = readUserProfileFromDb();
 
 		if (profile != null)
