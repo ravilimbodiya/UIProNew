@@ -6,39 +6,31 @@
   <meta name="vaadin-version" content="7.7.7">
  </head>
  <body>
-  <vaadin-css-layout style-name="tiles" responsive size-full>
+  <vaadin-css-layout style-name="tiles" responsive width="1024px">
    <vaadin-css-layout style-name="row" width-full>
-    <vaadin-css-layout style-name="tile quarter">
-     <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%" height="86px">
+    <vaadin-css-layout style-name="tile quarter" width="1020px">
+     <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width-full height="86px">
       <vaadin-label style-name="title" responsive height="23px" plain-text>
         Total Users 
       </vaadin-label>
-      <vaadin-label>
+      <vaadin-label _id="totalUsersLabel">
        <b>80</b>
       </vaadin-label>
      </vaadin-css-layout>
-     <vaadin-css-layout style-name="tile-content padding admin-tiles" width="25%">
+     <vaadin-css-layout style-name="tile-content padding admin-tiles" width-full>
       <vaadin-label style-name="title" height="24px" plain-text>
         Total Designs 
       </vaadin-label>
-      <vaadin-label>
+      <vaadin-label _id="totalDesignsLabel">
        <b>240</b>
       </vaadin-label>
      </vaadin-css-layout>
-     <vaadin-css-layout style-name="tile-content padding admin-tiles" width="25%">
+     <vaadin-css-layout style-name="tile-content padding admin-tiles" width-full>
       <vaadin-label style-name="title" height="24px" plain-text>
-        Total Downloads 
+        Total Active Users 
       </vaadin-label>
-      <vaadin-label>
+      <vaadin-label _id="totalActiveUsersLabel">
        <b>75</b>
-      </vaadin-label>
-     </vaadin-css-layout>
-     <vaadin-css-layout style-name="tile-content padding admin-tiles" width="25%">
-      <vaadin-label style-name="title" height="24px" plain-text>
-        Memory Used 
-      </vaadin-label>
-      <vaadin-label>
-       <b>1.5 GB</b>
       </vaadin-label>
      </vaadin-css-layout>
     </vaadin-css-layout>
