@@ -27,6 +27,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -53,6 +54,7 @@ public class MyUI extends UI {
 	private AccessControl accessControl = new BasicAccessControl();
 	private static VerticalLayout viewerLayout = new VerticalLayout();
 	private static VerticalLayout globalLayout = new VerticalLayout();
+	ComponentDetail cd = null;
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
@@ -120,9 +122,18 @@ public class MyUI extends UI {
 								+ "saveAs(blob, 'your_design.html');"
 								);
 						Notification.show("Your design is saved to local disk.", Type.TRAY_NOTIFICATION);
+					} if(uiproReqObj.isRemoveLast()){
+						//Remove last component from the layout
+						if(globalLayout.getComponentCount() > 0){
+							Component compToBeRemoved = globalLayout.getComponent(globalLayout.getComponentCount() - 1);
+							globalLayout.removeComponent(compToBeRemoved);
+						} else {
+							Notification.show("No element to remove.", Type.TRAY_NOTIFICATION);
+						}
+						
 					} else if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
 						//if user asked some custom components
-						ComponentDetail cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
+						cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
 						addComponentToUI(cd);
 					} else {
 						//Removing previous components to load newly requested theme.
