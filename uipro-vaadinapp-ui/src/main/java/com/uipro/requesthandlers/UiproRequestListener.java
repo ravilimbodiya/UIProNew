@@ -67,44 +67,55 @@ public class UiproRequestListener extends HttpServlet {
 	private UiproRequest convertJsonToDataObject(JSONObject reqParamsJson) throws UiproGenericException {
 		try {
 			UiproRequest reqObj = new UiproRequest();
+			boolean templateFlag = false;
 
 			String uid = (String) reqParamsJson.get("uid");
 			if (uid != null && uid.length() > 0) {
 				reqObj.setUid(Integer.parseInt(uid));
+			} else {
+				throw new UiproGenericException("No UID with request.");
 			}
-
-			String element = (String) reqParamsJson.get("element");
-			if (element != null && element.length() > 0) {
-				reqObj.setElement(element);
-			}
-
-			String elemName = (String) reqParamsJson.get("elementName");
-			if (elemName != null && elemName.length() > 0) {
-				reqObj.setElementName(elemName);
-			}
-
-			String elemVal = (String) reqParamsJson.get("elementValue");
-			if (elemVal != null) {
-				reqObj.setElementValue(elemVal);
-			}
-
+			
 			reqObj.setNewPage((boolean) reqParamsJson.get("isNewPage"));
 			reqObj.setSaveRequest((boolean) reqParamsJson.get("isSaveRequest"));
 			reqObj.setRemoveLast((boolean) reqParamsJson.get("isRemoveLast"));
 			
 			String template = (String)reqParamsJson.get("template");
 			if(template != null && template.length() > 0) {
+				// This is the template request
 				reqObj.setTemplate(template);
+				templateFlag = true;
 			} 
+			
+			if(!templateFlag){
+				String element = (String) reqParamsJson.get("element");
+				if (element != null && element.length() > 0) {
+					reqObj.setElement(element);
+				} else {
+					throw new UiproGenericException("No Element with request.");
+				}
 
-			String elemId = (String) reqParamsJson.get("elementId");
-			if(elemId != null && elemId.length() > 0) {
-				reqObj.setElementId(elemId);
-			}
+				String elemName = (String) reqParamsJson.get("elementName");
+				if (elemName != null && elemName.length() > 0) {
+					reqObj.setElementName(elemName);
+				}
 
-			String elemPos = (String) reqParamsJson.get("elementPosition");
-			if (elemPos != null) {
-				reqObj.setElementPosition(elemPos);
+				String elemVal = (String) reqParamsJson.get("elementValue");
+				if (elemVal != null) {
+					reqObj.setElementValue(elemVal);
+				} else {
+					throw new UiproGenericException("No Element Value with request.");
+				}
+				
+				String elemId = (String) reqParamsJson.get("elementId");
+				if(elemId != null && elemId.length() > 0) {
+					reqObj.setElementId(elemId);
+				}
+
+				String elemPos = (String) reqParamsJson.get("elementPosition");
+				if (elemPos != null) {
+					reqObj.setElementPosition(elemPos);
+				}
 			}
 
 			return reqObj;

@@ -79,16 +79,13 @@ public class UIComponentHelper {
 
 	private static void fillButtonProperties(UiproRequest reqObj, Component button) {
 		String buttonLabel = reqObj.getElementValue();
-		if (buttonLabel == null || buttonLabel.length() == 0) {
-			button.setCaption(Constants.BUTTONLABEL);
-		} else {
+		if (buttonLabel != null && buttonLabel.length() > 0) {
 			button.setCaption(buttonLabel);
+			button.setId(reqObj.getElementId());
+			((AbstractComponent) button).setResponsive(true);
+			button.setEnabled(true);
+			button.setVisible(true);
 		}
-
-		button.setId(reqObj.getElementId());
-		((AbstractComponent) button).setResponsive(true);
-		button.setEnabled(true);
-		button.setVisible(true);
 	}
 
 	private static Alignment parseComponentAlignment(UiproRequest reqObj) {

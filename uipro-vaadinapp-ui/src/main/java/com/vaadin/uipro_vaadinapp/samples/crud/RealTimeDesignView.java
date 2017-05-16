@@ -4,8 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Collection;
 
+import com.uipro.authentication.CurrentUser;
 import com.uipro.entity.Product;
 import com.uipro.utility.Constants;
+import com.uipro.utility.DbUtil;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.BrowserWindowOpener;
@@ -92,6 +94,7 @@ public class RealTimeDesignView extends CssLayout implements View {
 						+ "saveAs(blob, 'your_design.html');"
 						);
 				showSaveNotification("Your design is saved to local disk.");
+				DbUtil.updateDesignCountForUser(CurrentUser.get());
             }
         });
 

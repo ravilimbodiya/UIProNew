@@ -27,12 +27,12 @@ public class UiproRequest implements Serializable {
     	isNewPage = false;
     	isSaveRequest = false;
     	isRemoveLast = false;
-    	elementValue = "button";
+    	elementValue = "";
     	template = null;
-    	element = "button";
-    	elementName = "button";
-    	elementPosition = "top_center";
-    	elementId = "button1";
+    	element = "";
+    	elementName = "";
+    	elementPosition = "";
+    	elementId = "";
 	}
     
 	public UiproRequest(int uid, boolean isNewPage, boolean isSaveRequest, boolean isRemoveLast, String template, String element, String elementType,

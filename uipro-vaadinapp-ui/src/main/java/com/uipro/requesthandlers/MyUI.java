@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.uipro.authentication.AccessControl;
 import com.uipro.authentication.BasicAccessControl;
+import com.uipro.authentication.CurrentUser;
 import com.uipro.authentication.LoginScreen;
 import com.uipro.authentication.LoginScreen.LoginListener;
 import com.uipro.dataservices.DataService;
@@ -11,6 +12,7 @@ import com.uipro.dataservices.UiproRequestDataService;
 import com.uipro.entity.ComponentDetail;
 import com.uipro.entity.UiproRequest;
 import com.uipro.utility.Constants;
+import com.uipro.utility.DbUtil;
 import com.uipro.views.ContactUsView;
 import com.uipro.views.FooterView;
 import com.uipro.views.HeaderView;
@@ -122,7 +124,8 @@ public class MyUI extends UI {
 								+ "saveAs(blob, 'your_design.html');"
 								);
 						Notification.show("Your design is saved to local disk.", Type.TRAY_NOTIFICATION);
-					} if(uiproReqObj.isRemoveLast()){
+						DbUtil.updateDesignCountForUser(CurrentUser.get());
+					} else if(uiproReqObj.isRemoveLast()){
 						//Remove last component from the layout
 						if(globalLayout.getComponentCount() > 0){
 							Component compToBeRemoved = globalLayout.getComponent(globalLayout.getComponentCount() - 1);
@@ -131,13 +134,10 @@ public class MyUI extends UI {
 							Notification.show("No element to remove.", Type.TRAY_NOTIFICATION);
 						}
 						
-					} else if (uiproReqObj.getTemplate() == null || uiproReqObj.getTemplate().equalsIgnoreCase("")) {
-						//if user asked some custom components
-						cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
-						addComponentToUI(cd);
-					} else {
+					} else if (uiproReqObj.getTemplate() != null && !uiproReqObj.getTemplate().equalsIgnoreCase("")) {
+
 						//Removing previous components to load newly requested theme.
-						globalLayout.removeAllComponents();
+						//globalLayout.removeAllComponents();
 						// draw the specified template for him
 						ComponentDetail cdObject = new ComponentDetail();
 						if(uiproReqObj.getTemplate().equalsIgnoreCase("login")){
@@ -157,6 +157,12 @@ public class MyUI extends UI {
 							cdObject.setAlignment(Alignment.TOP_CENTER);
 						}
 						addComponentToUI(cdObject);
+					
+						
+					} else if (uiproReqObj.getElement() != null){
+						//if user asked some custom components
+						cd = UIComponentHelper.parseComponentFromRequest(uiproReqObj);
+						addComponentToUI(cd);
 					}
 
 					DataService.clear();
