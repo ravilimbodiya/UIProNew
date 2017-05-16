@@ -26,4 +26,8 @@ public class DbUtil {
 	public static void releaseResources(){
 		mongoClient.close();
 	}
+	
+	public static void updateDesignCountForUser(String uid) {
+		
+	}
 }
