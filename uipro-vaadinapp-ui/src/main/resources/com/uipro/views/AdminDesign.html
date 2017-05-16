@@ -7,40 +7,32 @@
   <meta name="package-mapping" content="com_uipro_views:com.uipro.views">
  </head>
  <body>
-  <vaadin-vertical-layout style-name="crud-template" responsive size-auto>
-   <vaadin-css-layout style-name="tiles" responsive width-full :center>
-    <vaadin-css-layout style-name="row" responsive width-full>
-     <vaadin-css-layout style-name="tile quarter">
-      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
+  <vaadin-vertical-layout style-name="crud-template" responsive width="1022px">
+   <vaadin-css-layout style-name="tiles" responsive width="1024px" :center>
+    <vaadin-css-layout style-name="row" width-full>
+     <vaadin-css-layout style-name="tile quarter" width="1020px">
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width-full height="86px">
        <vaadin-label style-name="title" responsive height="23px" plain-text>
          Total Users 
        </vaadin-label>
-       <vaadin-label>
+       <vaadin-label _id="totalUsersLabel">
         <b>80</b>
        </vaadin-label>
       </vaadin-css-layout>
-      <vaadin-css-layout style-name="tile-content padding admin-tiles" width="25%">
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" width-full>
        <vaadin-label style-name="title" height="24px" plain-text>
          Total Designs 
        </vaadin-label>
-       <vaadin-label>
+       <vaadin-label _id="totalDesignsLabel">
         <b>240</b>
        </vaadin-label>
       </vaadin-css-layout>
-      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
+      <vaadin-css-layout style-name="tile-content padding admin-tiles" width-full>
        <vaadin-label style-name="title" height="24px" plain-text>
-         Total Saved 
+         Total Active Users 
        </vaadin-label>
-       <vaadin-label>
+       <vaadin-label _id="totalActiveUsersLabel">
         <b>75</b>
-       </vaadin-label>
-      </vaadin-css-layout>
-      <vaadin-css-layout style-name="tile-content padding admin-tiles" responsive width="25%">
-       <vaadin-label style-name="title" height="24px" plain-text>
-         Memory Used 
-       </vaadin-label>
-       <vaadin-label>
-        <b>1.5 GB</b>
        </vaadin-label>
       </vaadin-css-layout>
      </vaadin-css-layout>
@@ -57,7 +49,7 @@
    </vaadin-horizontal-layout>
    <vaadin-css-layout style-name="content" size-full :expand>
     <vaadin-css-layout style-name="list" size-full>
-     <vaadin-grid responsive width-full height="156px" _id="list">
+     <vaadin-grid responsive width="1022px" height="156px" _id="list">
       <table>
        <colgroup>
         <col property-id="Users" sortable>
