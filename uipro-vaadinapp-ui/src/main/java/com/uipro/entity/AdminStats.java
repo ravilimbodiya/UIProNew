@@ -5,6 +5,13 @@ public class AdminStats {
 	private int totalActiveUsers;
 	private int blockedUsers;
 	private int totalDesignsCreated;
+	
+	public AdminStats() {
+		totalActiveUsers = 0;
+		totalDesignsCreated = 0;
+		totalUsers = 0;
+	}
+	
 	public int getTotalUsers() {
 		return totalUsers;
 	}
