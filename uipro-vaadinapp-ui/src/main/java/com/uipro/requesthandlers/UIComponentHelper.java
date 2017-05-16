@@ -43,7 +43,7 @@ public class UIComponentHelper {
 			fillCheckboxProperties(reqObj, c);
 			break;
 		case Constants.LABEL:
-			c = (Component) new Label();
+			c = new Label();
 			fillLabelProperties(reqObj, c);
 			break;
 		case Constants.DROPDOWN:
@@ -54,6 +54,7 @@ public class UIComponentHelper {
 
 	private static void fillLabelProperties(UiproRequest reqObj, Component label) {
 		label.setCaption(reqObj.getElementValue());
+		((AbstractComponent) label).setResponsive(true);
 		label.setEnabled(true);
 		label.setVisible(true);
 	}
